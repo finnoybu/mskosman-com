@@ -1,0 +1,89 @@
+---
+---
+
+<div class="mb-8">
+  <div class="relative">
+    <input
+      type="text"
+      id="search-input"
+      placeholder="Search lessons..."
+      class="w-full px-4 py-3 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-gray-800 dark:text-white"
+    />
+    <div
+      id="search-results"
+      class="hidden absolute top-full left-0 right-0 mt-2 max-h-96 overflow-y-auto bg-white dark:bg-gray-800 border border-border rounded-lg shadow-lg z-10"
+    >
+    </div>
+  </div>
+</div>
+
+<script>
+  import { getCollection } from 'astro:content';
+  
+  let allLessons: any[] = [];
+  
+  // Fetch lessons data
+  async function loadLessons() {
+    try {
+      const response = await fetch('/search-data.json');
+      allLessons = await response.json();
+    } catch (error) {
+      console.error('Failed to load search data:', error);
+    }
+  }
+
+  loadLessons();
+
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  const searchResults = document.getElementById('search-results') as HTMLDivElement;
+
+  function search(query: string) {
+    if (!query.trim()) {
+      searchResults.classList.add('hidden');
+      return;
+    }
+
+    const lowercaseQuery = query.toLowerCase();
+    const results = allLessons.filter((lesson) => {
+      return (
+        lesson.title.toLowerCase().includes(lowercaseQuery) ||
+        lesson.subject.toLowerCase().includes(lowercaseQuery) ||
+        lesson.grade.toLowerCase().includes(lowercaseQuery) ||
+        lesson.objective.toLowerCase().includes(lowercaseQuery) ||
+        lesson.tags.some((tag: string) => tag.toLowerCase().includes(lowercaseQuery))
+      );
+    }).slice(0, 10);
+
+    if (results.length === 0) {
+      searchResults.innerHTML = '<div class="p-4 text-gray-500 dark:text-gray-400">No results found</div>';
+      searchResults.classList.remove('hidden');
+      return;
+    }
+
+    searchResults.innerHTML = results
+      .map(
+        (lesson) => `
+        <a href="/lessons/${lesson.slug}" class="block p-4 hover:bg-gray-50 dark:hover:bg-gray-700 border-b border-border last:border-b-0">
+          <div class="font-semibold text-gray-900 dark:text-gray-100">${lesson.title}</div>
+          <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            ${lesson.subject} • ${lesson.grade}
+          </div>
+        </a>
+      `
+      )
+      .join('');
+    
+    searchResults.classList.remove('hidden');
+  }
+
+  searchInput?.addEventListener('input', (e) => {
+    search((e.target as HTMLInputElement).value);
+  });
+
+  // Close results when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!searchInput?.contains(e.target as Node) && !searchResults?.contains(e.target as Node)) {
+      searchResults?.classList.add('hidden');
+    }
+  });
+</script>

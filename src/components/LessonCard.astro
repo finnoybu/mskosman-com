@@ -1,0 +1,46 @@
+---
+interface Props {
+  lessons: Array<{
+    slug: string;
+    data: {
+      title: string;
+      subject: string;
+      grade: string;
+      durationMinutes: number;
+      objective: string;
+    };
+  }>;
+}
+
+const { lessons } = Astro.props;
+import { GRADE_LABELS } from '@lib/constants';
+---
+
+<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+  {lessons.map((lesson) => (
+    <a
+      href={`/lessons/${lesson.slug}`}
+      class="block p-6 rounded-lg border border-border hover:border-primary-500 hover:shadow-md transition-all bg-white dark:bg-gray-800"
+    >
+      <div class="flex items-start justify-between mb-2">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          {lesson.data.title}
+        </h3>
+        <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">
+          {lesson.data.durationMinutes}min
+        </span>
+      </div>
+      <div class="flex gap-2 mb-3">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200">
+          {lesson.data.subject}
+        </span>
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+          {GRADE_LABELS[lesson.data.grade as keyof typeof GRADE_LABELS]}
+        </span>
+      </div>
+      <p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
+        {lesson.data.objective}
+      </p>
+    </a>
+  ))}
+</div>

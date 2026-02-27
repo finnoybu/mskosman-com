@@ -1,0 +1,57 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import SearchBar from '@components/SearchBar.astro';
+---
+
+<MainLayout title="mskosman.com - Home">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+        Virginia SOL-Aligned Lesson Plans
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+        Homeschool, tutoring, and extracurricular lessons designed for 15–20 minute sessions
+      </p>
+      <SearchBar />
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 mt-12">
+      <a
+        href="/subjects"
+        class="p-8 rounded-lg border-2 border-border hover:border-primary-500 transition-all bg-white dark:bg-gray-800 hover:shadow-lg"
+      >
+        <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+          Browse by Subject
+        </h2>
+        <p class="text-gray-600 dark:text-gray-300">
+          Explore lesson plans organized by subject area, from Computer Science to World Language.
+        </p>
+      </a>
+
+      <a
+        href="/grades"
+        class="p-8 rounded-lg border-2 border-border hover:border-primary-500 transition-all bg-white dark:bg-gray-800 hover:shadow-lg"
+      >
+        <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+          Browse by Grade
+        </h2>
+        <p class="text-gray-600 dark:text-gray-300">
+          Find lessons tailored to your student's grade level, from Kindergarten through 12th grade.
+        </p>
+      </a>
+    </div>
+
+    <div class="mt-16 p-6 rounded-lg bg-gray-50 dark:bg-gray-800 border border-border">
+      <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+        About These Lessons
+      </h2>
+      <ul class="space-y-2 text-gray-600 dark:text-gray-300">
+        <li>✓ Aligned to Virginia Department of Education Standards of Learning (SOL)</li>
+        <li>✓ Designed for 15–20 minute focused sessions</li>
+        <li>✓ Structured with warm-up, instruction, practice, and assessment</li>
+        <li>✓ Includes differentiation strategies and extensions</li>
+        <li>✓ Perfect for homeschool, tutoring, or supplemental learning</li>
+      </ul>
+    </div>
+  </div>
+</MainLayout>

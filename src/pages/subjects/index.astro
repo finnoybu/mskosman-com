@@ -1,0 +1,39 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import { SUBJECTS, SUBJECT_SLUGS, type Subject } from '@lib/constants';
+import { getCollection } from 'astro:content';
+
+const allLessons = await getCollection('lessons');
+
+// Count lessons per subject
+const lessonCounts = SUBJECTS.reduce((acc, subject) => {
+  acc[subject] = allLessons.filter(lesson => lesson.data.subject === subject).length;
+  return acc;
+}, {} as Record<Subject, number>);
+---
+
+<MainLayout title="Browse by Subject - mskosman.com">
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-8">
+      Browse by Subject
+    </h1>
+    
+    <div class="grid gap-4 md:grid-cols-2">
+      {SUBJECTS.map((subject) => (
+        <a
+          href={`/subjects/${SUBJECT_SLUGS[subject]}`}
+          class="p-6 rounded-lg border border-border hover:border-primary-500 hover:shadow-md transition-all bg-white dark:bg-gray-800"
+        >
+          <div class="flex items-center justify-between">
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
+              {subject}
+            </h2>
+            <span class="text-sm text-gray-500 dark:text-gray-400">
+              {lessonCounts[subject]} lessons
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</MainLayout>

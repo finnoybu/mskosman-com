@@ -1,0 +1,39 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import { GRADES, GRADE_LABELS, type Grade } from '@lib/constants';
+import { getCollection } from 'astro:content';
+
+const allLessons = await getCollection('lessons');
+
+// Count lessons per grade
+const lessonCounts = GRADES.reduce((acc, grade) => {
+  acc[grade] = allLessons.filter(lesson => lesson.data.grade === grade).length;
+  return acc;
+}, {} as Record<Grade, number>);
+---
+
+<MainLayout title="Browse by Grade - mskosman.com">
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-8">
+      Browse by Grade
+    </h1>
+    
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {GRADES.map((grade) => (
+        <a
+          href={`/grades/${grade}`}
+          class="p-6 rounded-lg border border-border hover:border-primary-500 hover:shadow-md transition-all bg-white dark:bg-gray-800"
+        >
+          <div class="flex items-center justify-between">
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
+              {GRADE_LABELS[grade]}
+            </h2>
+            <span class="text-sm text-gray-500 dark:text-gray-400">
+              {lessonCounts[grade]}
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</MainLayout>

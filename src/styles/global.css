@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-text: 15 23 42;
+    --color-background: 255 255 255;
+    --color-border: 226 232 240;
+  }
+
+  [data-theme='dark'] {
+    --color-text: 248 250 252;
+    --color-background: 15 23 42;
+    --color-border: 51 65 85;
+  }
+
+  [data-theme='high-contrast'] {
+    --color-text: 0 0 0;
+    --color-background: 255 255 255;
+    --color-border: 0 0 0;
+  }
+
+  body {
+    @apply bg-background text-text;
+    color: rgb(var(--color-text));
+    background-color: rgb(var(--color-background));
+  }
+}
+
+@layer utilities {
+  .text-text {
+    color: rgb(var(--color-text));
+  }
+
+  .bg-background {
+    background-color: rgb(var(--color-background));
+  }
+
+  .border-border {
+    border-color: rgb(var(--color-border));
+  }
+}

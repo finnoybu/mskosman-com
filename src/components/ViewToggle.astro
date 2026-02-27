@@ -1,0 +1,32 @@
+---
+const currentPath = Astro.url.pathname;
+const isSubjectView = currentPath.startsWith('/subjects');
+---
+
+<div class="view-toggle flex items-center gap-2 text-sm">
+  <span class="text-gray-600 dark:text-gray-400">View by:</span>
+  <div class="inline-flex rounded-md border border-border">
+    <a
+      href="/subjects"
+      class:list={[
+        'px-4 py-2 transition-colors',
+        isSubjectView
+          ? 'bg-primary-600 text-white'
+          : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+      ]}
+    >
+      Subject
+    </a>
+    <a
+      href="/grades"
+      class:list={[
+        'px-4 py-2 border-l border-border transition-colors',
+        !isSubjectView && currentPath.startsWith('/grades')
+          ? 'bg-primary-600 text-white'
+          : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+      ]}
+    >
+      Grade
+    </a>
+  </div>
+</div>

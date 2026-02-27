@@ -1,0 +1,82 @@
+---
+---
+
+<div class="theme-switcher">
+  <button
+    id="theme-toggle"
+    class="px-3 py-2 text-sm rounded-md border border-border hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+    aria-label="Toggle theme"
+  >
+    <span id="theme-label">Theme</span>
+  </button>
+  <div
+    id="theme-menu"
+    class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 border border-border"
+  >
+    <div class="py-1" role="menu">
+      <button
+        data-theme="light"
+        class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+      >
+        Light
+      </button>
+      <button
+        data-theme="dark"
+        class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+      >
+        Dark
+      </button>
+      <button
+        data-theme="high-contrast"
+        class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+      >
+        High Contrast
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const toggle = document.getElementById('theme-toggle');
+  const menu = document.getElementById('theme-menu');
+  const label = document.getElementById('theme-label');
+  const buttons = menu?.querySelectorAll('[data-theme]');
+
+  // Update label based on current theme
+  const updateLabel = () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    if (label) {
+      label.textContent = currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1).replace('-', ' ');
+    }
+  };
+
+  updateLabel();
+
+  toggle?.addEventListener('click', () => {
+    menu?.classList.toggle('hidden');
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!toggle?.contains(e.target as Node) && !menu?.contains(e.target as Node)) {
+      menu?.classList.add('hidden');
+    }
+  });
+
+  buttons?.forEach((button) => {
+    button.addEventListener('click', () => {
+      const theme = button.getAttribute('data-theme');
+      if (theme) {
+        window.dispatchEvent(new CustomEvent('theme-change', { detail: { theme } }));
+        updateLabel();
+        menu?.classList.add('hidden');
+      }
+    });
+  });
+</script>
+
+<style>
+  .theme-switcher {
+    position: relative;
+  }
+</style>
