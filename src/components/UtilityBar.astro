@@ -1,0 +1,239 @@
+---
+---
+
+<div class="utility-bar border-b border-border bg-background">
+  <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-6 text-sm">
+    <!-- Print Button -->
+    <button
+      id="print-btn"
+      class="flex items-center gap-2 px-3 py-1 rounded border border-border hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+      aria-label="Print lesson"
+      title="Print this page"
+    >
+      <span>🖨️</span>
+      <span>Print</span>
+    </button>
+
+    <!-- Share & Bookmark Button -->
+    <div class="share-container relative">
+      <button
+        id="share-btn"
+        class="flex items-center gap-2 px-3 py-1 rounded border border-border hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        aria-label="Share and bookmark options"
+        aria-haspopup="menu"
+        aria-expanded="false"
+      >
+        <span>📤</span>
+        <span>Share</span>
+      </button>
+      
+      <div
+        id="share-menu"
+        role="menu"
+        class="hidden absolute left-0 mt-2 w-48 rounded border border-border bg-white dark:bg-gray-800 shadow-lg z-10"
+      >
+        <button
+          role="menuitem"
+          data-share="copy"
+          class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          Copy Link
+        </button>
+        <button
+          role="menuitem"
+          data-share="email"
+          class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          Email
+        </button>
+        <button
+          role="menuitem"
+          data-share="linkedin"
+          class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          LinkedIn
+        </button>
+        <button
+          role="menuitem"
+          data-share="twitter"
+          class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          Twitter (X)
+        </button>
+        <button
+          role="menuitem"
+          data-share="reddit"
+          class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          Reddit
+        </button>
+      </div>
+    </div>
+
+    <!-- Font Size Controls -->
+    <div class="flex items-center gap-2">
+      <label for="font-size-ctrl" class="text-xs font-medium">Font:</label>
+      <button
+        id="font-decrease"
+        class="px-2 py-1 rounded border border-border hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        aria-label="Decrease font size"
+        title="Decrease font size"
+      >
+        –
+      </button>
+      <div id="font-size-display" class="w-6 text-center text-xs text-gray-600 dark:text-gray-400">
+        100%
+      </div>
+      <button
+        id="font-increase"
+        class="px-2 py-1 rounded border border-border hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        aria-label="Increase font size"
+        title="Increase font size"
+      >
+        +
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Print functionality
+  const printBtn = document.getElementById('print-btn');
+  printBtn?.addEventListener('click', () => {
+    window.print();
+  });
+
+  // Share functionality
+  const shareBtn = document.getElementById('share-btn');
+  const shareMenu = document.getElementById('share-menu');
+  const shareItems = shareMenu?.querySelectorAll('[data-share]');
+
+  shareBtn?.addEventListener('click', () => {
+    const isOpen = shareMenu?.classList.contains('hidden') === false;
+    if (isOpen) {
+      shareMenu?.classList.add('hidden');
+      shareBtn.setAttribute('aria-expanded', 'false');
+    } else {
+      shareMenu?.classList.remove('hidden');
+      shareBtn.setAttribute('aria-expanded', 'true');
+      (shareItems?.[0] as HTMLButtonElement)?.focus();
+    }
+  });
+
+  // Close share menu on outside click
+  document.addEventListener('click', (e) => {
+    if (!shareBtn?.contains(e.target as Node) && !shareMenu?.contains(e.target as Node)) {
+      shareMenu?.classList.add('hidden');
+      shareBtn?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Keyboard navigation for share menu
+  shareMenu?.addEventListener('keydown', (e: KeyboardEvent) => {
+    const items = Array.from(shareItems || []);
+    const currentIndex = items.indexOf(e.target as HTMLButtonElement);
+    
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextIndex = (currentIndex + 1) % items.length;
+      (items[nextIndex] as HTMLButtonElement).focus();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prevIndex = currentIndex <= 0 ? items.length - 1 : currentIndex - 1;
+      (items[prevIndex] as HTMLButtonElement).focus();
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      shareMenu?.classList.add('hidden');
+      shareBtn?.setAttribute('aria-expanded', 'false');
+      shareBtn?.focus();
+    }
+  });
+
+  // Share menu item click handlers
+  shareItems?.forEach((item) => {
+    item.addEventListener('click', async () => {
+      const type = item.getAttribute('data-share');
+      const url = window.location.href;
+      const title = document.title;
+
+      switch (type) {
+        case 'copy':
+          try {
+            await navigator.clipboard.writeText(url);
+            const originalText = item.textContent;
+            item.textContent = '✓ Copied!';
+            setTimeout(() => {
+              item.textContent = originalText;
+            }, 2000);
+          } catch (err) {
+            console.error('Failed to copy:', err);
+          }
+          break;
+        case 'email':
+          window.location.href = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(url)}`;
+          break;
+        case 'linkedin':
+          window.open(
+            `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+            '_blank'
+          );
+          break;
+        case 'twitter':
+          window.open(
+            `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,
+            '_blank'
+          );
+          break;
+        case 'reddit':
+          window.open(
+            `https://reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`,
+            '_blank'
+          );
+          break;
+      }
+
+      shareMenu?.classList.add('hidden');
+      shareBtn?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Font size functionality
+  const fontDecreaseBtn = document.getElementById('font-decrease');
+  const fontIncreaseBtn = document.getElementById('font-increase');
+  const fontDisplay = document.getElementById('font-size-display');
+
+  const MIN_SIZE = 1;
+  const MAX_SIZE = 1.25;
+  const STEP = 0.125;
+
+  function getFontSize(): number {
+    const stored = localStorage.getItem('fontSize');
+    return stored ? parseFloat(stored) : 1;
+  }
+
+  function setFontSize(size: number) {
+    const clamped = Math.max(MIN_SIZE, Math.min(MAX_SIZE, size));
+    localStorage.setItem('fontSize', clamped.toString());
+    document.documentElement.style.setProperty('--font-size-base', `${clamped}rem`);
+    if (fontDisplay) {
+      fontDisplay.textContent = `${Math.round(clamped * 100)}%`;
+    }
+  }
+
+  // Initialize font size from storage
+  setFontSize(getFontSize());
+
+  fontDecreaseBtn?.addEventListener('click', () => {
+    setFontSize(getFontSize() - STEP);
+  });
+
+  fontIncreaseBtn?.addEventListener('click', () => {
+    setFontSize(getFontSize() + STEP);
+  });
+</script>
+
+<style>
+  .utility-bar {
+    @apply sticky top-16 z-10;
+  }
+</style>

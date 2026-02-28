@@ -21,6 +21,7 @@
     @apply bg-background text-text;
     color: rgb(var(--color-text));
     background-color: rgb(var(--color-background));
+    font-size: var(--font-size-base);
   }
 
   /* Strong focus-visible styles for keyboard navigation */
@@ -65,3 +66,100 @@
     border-color: rgb(var(--color-border));
   }
 }
+
+/* Print Styles */
+@media print {
+  /* Hide all non-content elements */
+  header {
+    display: none;
+  }
+
+  .utility-bar {
+    display: none;
+  }
+
+  .theme-switcher {
+    display: none;
+  }
+
+  .contrast-toggle {
+    display: none;
+  }
+
+  nav {
+    display: none;
+  }
+
+  #search-input,
+  #search-results {
+    display: none;
+  }
+
+  .view-toggle {
+    display: none;
+  }
+
+  footer {
+    display: none;
+  }
+
+  /* Optimize body text for print */
+  body {
+    color: #000000;
+    background-color: #ffffff;
+  }
+
+  /* Remove shadows and backgrounds */
+  * {
+    box-shadow: none !important;
+  }
+
+  .theme-surface,
+  .bg-gray-50,
+  .bg-gray-100,
+  .bg-white,
+  .dark\:bg-gray-800,
+  .dark\:bg-gray-900 {
+    background-color: #ffffff !important;
+  }
+
+  /* Preserve lesson content spacing */
+  article {
+    page-break-inside: avoid;
+  }
+
+  h1,
+  h2,
+  h3 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  .prose p {
+    page-break-inside: avoid;
+    orphans: 2;
+    widows: 2;
+  }
+
+  /* Ensure links are visible in print */
+  a {
+    text-decoration: underline;
+    color: #0000ee;
+  }
+
+  /* Optimize container widths for print */
+  .container {
+    max-width: 100%;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  main {
+    padding: 0;
+    margin: 0;
+  }
+}
+
