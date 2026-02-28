@@ -1,28 +1,53 @@
-# build output
+# ----------------------------
+# Build output
+# ----------------------------
 dist/
 .output/
 
-# dependencies
+# Astro cache
+.astro/
+
+# ----------------------------
+# Dependencies
+# ----------------------------
 node_modules/
 
-# logs
+# ----------------------------
+# Test artifacts
+# ----------------------------
+playwright-report/
+test-results/
+coverage/
+
+# ----------------------------
+# Logs
+# ----------------------------
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+*.log
 
-# environment variables
+# ----------------------------
+# Environment variables
+# ----------------------------
 .env
 .env.production
+.env.local
 
-# macOS-specific files
+# ----------------------------
+# OS files
+# ----------------------------
 .DS_Store
+Thumbs.db
 
-# jetbrains setting folders
+# ----------------------------
+# IDE folders
+# ----------------------------
 .idea/
-
-# vscode settings
 .vscode/
 
-# misc
-*.log
+# ----------------------------
+# Misc
+# ----------------------------
+*.tsbuildinfo
