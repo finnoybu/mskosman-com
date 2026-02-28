@@ -7,18 +7,21 @@
     --color-text: 15 23 42;
     --color-background: 255 255 255;
     --color-border: 226 232 240;
+    --focus-ring: 2px solid rgb(6 182 212);
   }
 
   [data-theme='dark'] {
     --color-text: 248 250 252;
     --color-background: 15 23 42;
     --color-border: 51 65 85;
+    --focus-ring: 2px solid rgb(34 211 238);
   }
 
   [data-theme='high-contrast'] {
-    --color-text: 0 0 0;
-    --color-background: 255 255 255;
-    --color-border: 0 0 0;
+    --color-text: 255 255 255;
+    --color-background: 0 0 0;
+    --color-border: 255 255 255;
+    --focus-ring: 3px solid #ffff00;
   }
 
   body {
@@ -27,13 +30,20 @@
     background-color: rgb(var(--color-background));
   }
 
-  /* Visible focus styles for keyboard navigation */
-  a:focus,
-  button:focus,
-  input:focus,
-  select:focus,
-  textarea:focus {
-    @apply outline-2 outline-offset-2 outline-primary-600 dark:outline-primary-400;
+  /* Strong focus-visible styles for keyboard navigation */
+  :focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* Ensure all interactive elements have focus-visible */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
   }
 
   /* Ensure buttons are keyboard accessible */
@@ -45,7 +55,44 @@
   a {
     @apply transition-colors;
   }
+
+  /* High contrast specific styles */
+  [data-theme='high-contrast'] a {
+    text-decoration: underline;
+    color: #ffffff;
+  }
+
+  [data-theme='high-contrast'] a:hover {
+    color: #ffff00;
+  }
+
+  [data-theme='high-contrast'] button {
+    border: 2px solid #ffffff;
+    background-color: transparent;
+    color: #ffffff;
+    font-weight: bold;
+  }
+
+  [data-theme='high-contrast'] button:hover {
+    background-color: #ffffff;
+    color: #000000;
+  }
+
+  [data-theme='high-contrast'] input,
+  [data-theme='high-contrast'] select,
+  [data-theme='high-contrast'] textarea {
+    border: 2px solid #ffffff;
+    background-color: #000000;
+    color: #ffffff;
+  }
+
+  [data-theme='high-contrast'] input::placeholder,
+  [data-theme='high-contrast'] textarea::placeholder {
+    color: #ffffff;
+    opacity: 0.7;
+  }
 }
+
 @layer utilities {
   .text-text {
     color: rgb(var(--color-text));
