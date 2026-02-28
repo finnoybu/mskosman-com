@@ -2,10 +2,11 @@
 import MainLayout from '@layouts/MainLayout.astro';
 import LessonCard from '@components/LessonCard.astro';
 import { getCollection } from 'astro:content';
-import { SUBJECTS, SUBJECT_SLUGS, type Subject } from '@lib/constants';
+import { SUBJECTS, SUBJECT_SLUGS, GRADE_LABELS, type Subject } from '@lib/constants';
 
 export async function getStaticPaths() {
   const allLessons = await getCollection('lessons');
+  const allStandards = await getCollection('standards');
   
   return SUBJECTS.map((subject) => ({
     params: { subjectSlug: SUBJECT_SLUGS[subject] },
@@ -14,14 +15,23 @@ export async function getStaticPaths() {
       lessons: allLessons
         .filter((lesson) => lesson.data.subject === subject)
         .sort((a, b) => a.data.grade.localeCompare(b.data.grade)),
+      standards: allStandards.filter((standard) => standard.data.subject === subject),
     },
   }));
 }
 
-const { subject, lessons } = Astro.props;
+const { subject, lessons, standards } = Astro.props;
+
+// Generate canonical URL
+const subjectSlug = SUBJECT_SLUGS[subject as Subject];
+const canonicalUrl = `https://mskosman.com/subjects/${subjectSlug}`;
 ---
 
-<MainLayout title={`${subject} Lessons - mskosman.com`}>
+<MainLayout
+  title={`${subject} Lessons - mskosman.com`}
+  description={`Explore ${lessons.length} ${subject} lesson plans aligned to Virginia SOL standards`}
+  canonical={canonicalUrl}
+>
   <div class="max-w-6xl mx-auto">
     <div class="mb-8">
       <a
@@ -37,6 +47,76 @@ const { subject, lessons } = Astro.props;
         {lessons.length} lesson{lessons.length !== 1 ? 's' : ''} available
       </p>
     </div>
+
+    {standards.length > 0 && (
+      <div class="mb-8 p-6 rounded-lg bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900">
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+          Standards & Resources
+        </h2>
+        <p class="text-gray-700 dark:text-gray-300 mb-4">
+          View Virginia SOL standards and instructional resources for {subject}:
+        </p>
+        <div class="space-y-4">
+          {standards.map((standard) => (
+            <div class="p-4 rounded bg-white dark:bg-gray-800 border border-blue-200 dark:border-blue-900">
+              <h3 class="font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                {GRADE_LABELS[standard.data.grade]}
+                {standard.data.strand && ` - ${standard.data.strand}`}
+              </h3>
+              
+              {standard.data.solCodes && standard.data.solCodes.length > 0 && (
+                <div class="mb-2">
+                  <span class="text-sm font-medium text-gray-700 dark:text-gray-300">SOL Codes: </span>
+                  <span class="text-sm text-gray-600 dark:text-gray-400">
+                    {standard.data.solCodes.join(', ')}
+                  </span>
+                </div>
+              )}
+
+              {standard.data.solDocLinks.length > 0 && (
+                <div class="mb-2">
+                  <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Documents:</p>
+                  <ul class="text-sm space-y-1 ml-4">
+                    {standard.data.solDocLinks.map((link) => (
+                      <li>
+                        <a
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+                        >
+                          {link.label} →
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {standard.data.instructionalResources && standard.data.instructionalResources.length > 0 && (
+                <div>
+                  <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Instructional Resources:</p>
+                  <ul class="text-sm space-y-1 ml-4">
+                    {standard.data.instructionalResources.map((resource) => (
+                      <li>
+                        <a
+                          href={resource.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+                        >
+                          {resource.label} →
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
 
     {lessons.length > 0 ? (
       <LessonCard lessons={lessons} />

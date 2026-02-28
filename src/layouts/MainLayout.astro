@@ -7,14 +7,15 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  canonical?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, canonical } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} canonical={canonical}>
   <Header />
-  <main class="container mx-auto px-4 py-8 min-h-[calc(100vh-8rem)]">
+  <main id="main-content" class="container mx-auto px-4 py-8 min-h-[calc(100vh-8rem)] focus:outline-none">
     <slot />
   </main>
   <Footer />

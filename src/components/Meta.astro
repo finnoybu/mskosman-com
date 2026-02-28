@@ -1,0 +1,44 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  ogType?: string;
+  ogImage?: string;
+  twitterHandle?: string;
+}
+
+const {
+  title,
+  description = "Virginia SOL-aligned lesson plans for K-12 educators",
+  canonical,
+  ogType = "website",
+  ogImage = "https://mskosman.com/og-image.png",
+  twitterHandle,
+} = Astro.props;
+
+const siteUrl = "https://mskosman.com";
+const canonicalUrl = canonical ? canonical : siteUrl;
+const pageTitle = title.includes("mskosman.com") ? title : `${title} - mskosman.com`;
+---
+
+<!-- Canonical -->
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Open Graph -->
+<meta property="og:type" content={ogType} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content="mskosman.com" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+{twitterHandle && <meta name="twitter:creator" content={twitterHandle} />}
+
+<!-- Standard Meta -->
+<meta name="description" content={description} />

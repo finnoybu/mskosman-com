@@ -26,8 +26,26 @@
     color: rgb(var(--color-text));
     background-color: rgb(var(--color-background));
   }
-}
 
+  /* Visible focus styles for keyboard navigation */
+  a:focus,
+  button:focus,
+  input:focus,
+  select:focus,
+  textarea:focus {
+    @apply outline-2 outline-offset-2 outline-primary-600 dark:outline-primary-400;
+  }
+
+  /* Ensure buttons are keyboard accessible */
+  button {
+    @apply cursor-pointer;
+  }
+
+  /* Improve link visibility */
+  a {
+    @apply transition-colors;
+  }
+}
 @layer utilities {
   .text-text {
     color: rgb(var(--color-text));

@@ -1335,11 +1335,25 @@ declare module 'astro:content' {
   data: InferEntrySchema<"lessons">
 } & { render(): Render[".mdx"] };
 };
+"standards": {
+"mathematics-grade-4.mdx": {
+	id: "mathematics-grade-4.mdx";
+  slug: "mathematics-grade-4";
+  body: string;
+  collection: "standards";
+  data: InferEntrySchema<"standards">
+} & { render(): Render[".mdx"] };
+};
 
 	};
 
 	type DataEntryMap = {
-		
+		"_templates": Record<string, {
+  id: string;
+  collection: "_templates";
+  data: any;
+}>;
+
 	};
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;

@@ -1,0 +1,314 @@
+/* ===================================================================
+   THEME TOKEN ARCHITECTURE
+   Base + Subject + Grade + Contrast Compound System
+   =================================================================== */
+
+/* -------------------------------------------------------------------
+   1. BASE TOKENS (Neutral Defaults)
+   ------------------------------------------------------------------- */
+
+:root {
+  /* Colors */
+  --color-bg: #ffffff;
+  --color-surface: #f8fafc;
+  --color-primary: #0ea5e9;
+  --color-accent: #06b6d4;
+  --color-text: #1e293b;
+  --color-text-muted: #64748b;
+  --color-border: #e2e8f0;
+  
+  /* Typography */
+  --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-size-base: 1rem;
+  
+  /* Border Radius */
+  --radius-card: 0.5rem;
+  --radius-button: 0.375rem;
+  
+  /* Shadows */
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-card-hover: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+/* Dark Mode Base */
+[data-theme='dark'] {
+  --color-bg: #0f172a;
+  --color-surface: #1e293b;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
+  --color-border: #334155;
+}
+
+/* -------------------------------------------------------------------
+   2. SUBJECT THEMES (data-subject)
+   ------------------------------------------------------------------- */
+
+/* Mathematics - Structured, Blue */
+[data-subject="mathematics"] {
+  --color-primary: #2563eb;
+  --color-accent: #3b82f6;
+  --color-surface: #eff6ff;
+  --subject-gradient: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
+}
+
+[data-theme='dark'][data-subject="mathematics"] {
+  --color-surface: #1e3a5f;
+  --subject-gradient: linear-gradient(135deg, #1e3a5f 0%, #1e293b 100%);
+}
+
+/* Science - Deep Green/Teal */
+[data-subject="science"] {
+  --color-primary: #059669;
+  --color-accent: #10b981;
+  --color-surface: #ecfdf5;
+  --subject-gradient: linear-gradient(135deg, #d1fae5 0%, #ecfdf5 100%);
+}
+
+[data-theme='dark'][data-subject="science"] {
+  --color-surface: #1a4a3a;
+  --subject-gradient: linear-gradient(135deg, #1a4a3a 0%, #1e293b 100%);
+}
+
+/* English - Warm Neutral */
+[data-subject="english"] {
+  --color-primary: #d97706;
+  --color-accent: #f59e0b;
+  --color-surface: #fef3c7;
+  --subject-gradient: linear-gradient(135deg, #fef3c7 0%, #fffbeb 100%);
+}
+
+[data-theme='dark'][data-subject="english"] {
+  --color-surface: #4a3a1a;
+  --subject-gradient: linear-gradient(135deg, #4a3a1a 0%, #1e293b 100%);
+}
+
+/* History and Social Science - Muted Sepia */
+[data-subject="history-and-social-science"],
+[data-subject="history-social-science"] {
+  --color-primary: #92400e;
+  --color-accent: #b45309;
+  --color-surface: #fef3c7;
+  --subject-gradient: linear-gradient(135deg, #fce7cd 0%, #fef3c7 100%);
+}
+
+[data-theme='dark'][data-subject="history-and-social-science"],
+[data-theme='dark'][data-subject="history-social-science"] {
+  --color-surface: #3a2a1a;
+  --subject-gradient: linear-gradient(135deg, #3a2a1a 0%, #1e293b 100%);
+}
+
+/* Fine Arts - Expressive Purple */
+[data-subject="fine-arts"] {
+  --color-primary: #7c3aed;
+  --color-accent: #8b5cf6;
+  --color-surface: #f5f3ff;
+  --subject-gradient: linear-gradient(135deg, #ede9fe 0%, #f5f3ff 100%);
+}
+
+[data-theme='dark'][data-subject="fine-arts"] {
+  --color-surface: #2e1a4a;
+  --subject-gradient: linear-gradient(135deg, #2e1a4a 0%, #1e293b 100%);
+}
+
+/* Computer Science - Cyan Tech */
+[data-subject="computer-science"] {
+  --color-primary: #0891b2;
+  --color-accent: #06b6d4;
+  --color-surface: #ecfeff;
+  --subject-gradient: linear-gradient(135deg, #cffafe 0%, #ecfeff 100%);
+}
+
+[data-theme='dark'][data-subject="computer-science"] {
+  --color-surface: #1a3a4a;
+  --subject-gradient: linear-gradient(135deg, #1a3a4a 0%, #1e293b 100%);
+}
+
+/* Health Education - Calm Green */
+[data-subject="health-education"] {
+  --color-primary: #16a34a;
+  --color-accent: #22c55e;
+  --color-surface: #f0fdf4;
+  --subject-gradient: linear-gradient(135deg, #dcfce7 0%, #f0fdf4 100%);
+}
+
+[data-theme='dark'][data-subject="health-education"] {
+  --color-surface: #1a3a2a;
+  --subject-gradient: linear-gradient(135deg, #1a3a2a 0%, #1e293b 100%);
+}
+
+/* Physical Education - Energetic Red */
+[data-subject="physical-education"] {
+  --color-primary: #dc2626;
+  --color-accent: #ef4444;
+  --color-surface: #fef2f2;
+  --subject-gradient: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
+}
+
+[data-theme='dark'][data-subject="physical-education"] {
+  --color-surface: #4a1a1a;
+  --subject-gradient: linear-gradient(135deg, #4a1a1a 0%, #1e293b 100%);
+}
+
+/* Economics & Personal Finance - Gold */
+[data-subject="economics-personal-finance"] {
+  --color-primary: #ca8a04;
+  --color-accent: #eab308;
+  --color-surface: #fefce8;
+  --subject-gradient: linear-gradient(135deg, #fef9c3 0%, #fefce8 100%);
+}
+
+[data-theme='dark'][data-subject="economics-personal-finance"] {
+  --color-surface: #3a3a1a;
+  --subject-gradient: linear-gradient(135deg, #3a3a1a 0%, #1e293b 100%);
+}
+
+/* World Language - Vibrant Indigo */
+[data-subject="world-language"] {
+  --color-primary: #4f46e5;
+  --color-accent: #6366f1;
+  --color-surface: #eef2ff;
+  --subject-gradient: linear-gradient(135deg, #e0e7ff 0%, #eef2ff 100%);
+}
+
+[data-theme='dark'][data-subject="world-language"] {
+  --color-surface: #1a1a4a;
+  --subject-gradient: linear-gradient(135deg, #1a1a4a 0%, #1e293b 100%);
+}
+
+/* Driver Education - Orange Alert */
+[data-subject="driver-education"] {
+  --color-primary: #ea580c;
+  --color-accent: #f97316;
+  --color-surface: #fff7ed;
+  --subject-gradient: linear-gradient(135deg, #fed7aa 0%, #fff7ed 100%);
+}
+
+[data-theme='dark'][data-subject="driver-education"] {
+  --color-surface: #4a2a1a;
+  --subject-gradient: linear-gradient(135deg, #4a2a1a 0%, #1e293b 100%);
+}
+
+/* Family Life Education - Soft Pink */
+[data-subject="family-life-education"] {
+  --color-primary: #db2777;
+  --color-accent: #ec4899;
+  --color-surface: #fdf2f8;
+  --subject-gradient: linear-gradient(135deg, #fce7f3 0%, #fdf2f8 100%);
+}
+
+[data-theme='dark'][data-subject="family-life-education"] {
+  --color-surface: #3a1a2a;
+  --subject-gradient: linear-gradient(135deg, #3a1a2a 0%, #1e293b 100%);
+}
+
+/* Digital Learning Integration - Electric Blue */
+[data-subject="digital-learning-integration"] {
+  --color-primary: #0284c7;
+  --color-accent: #0ea5e9;
+  --color-surface: #f0f9ff;
+  --subject-gradient: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+}
+
+[data-theme='dark'][data-subject="digital-learning-integration"] {
+  --color-surface: #1a2a4a;
+  --subject-gradient: linear-gradient(135deg, #1a2a4a 0%, #1e293b 100%);
+}
+
+/* -------------------------------------------------------------------
+   3. GRADE THEMES (data-grade) - Grouped by Range
+   ------------------------------------------------------------------- */
+
+/* K-3: Playful (Softer, Rounded) */
+[data-grade="k"],
+[data-grade="1"],
+[data-grade="2"],
+[data-grade="3"] {
+  --radius-card: 1rem;
+  --radius-button: 0.75rem;
+  --font-size-base: 1.0625rem;
+  --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+}
+
+/* 4-6: Balanced (Standard) */
+[data-grade="4"],
+[data-grade="5"],
+[data-grade="6"] {
+  --radius-card: 0.75rem;
+  --radius-button: 0.5rem;
+  --font-size-base: 1rem;
+  --shadow-card: 0 2px 4px -1px rgb(0 0 0 / 0.1), 0 1px 3px -1px rgb(0 0 0 / 0.08);
+}
+
+/* 7-9: Structured (Slightly Sharper) */
+[data-grade="7"],
+[data-grade="8"],
+[data-grade="9"] {
+  --radius-card: 0.5rem;
+  --radius-button: 0.375rem;
+  --font-size-base: 1rem;
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+/* 10-12: Minimal, Mature (Sharp, Refined) */
+[data-grade="10"],
+[data-grade="11"],
+[data-grade="12"] {
+  --radius-card: 0.375rem;
+  --radius-button: 0.25rem;
+  --font-size-base: 1rem;
+  --shadow-card: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+/* -------------------------------------------------------------------
+   4. ACCESSIBILITY / HIGH CONTRAST MODE (data-contrast)
+   ------------------------------------------------------------------- */
+
+[data-contrast="high"] {
+  --color-bg: #ffffff;
+  --color-surface: #ffffff;
+  --color-primary: #0000ee;
+  --color-accent: #551a8b;
+  --color-text: #000000;
+  --color-text-muted: #000000;
+  --color-border: #000000;
+  --shadow-card: none;
+  --shadow-card-hover: 0 0 0 3px #0000ee;
+}
+
+[data-contrast="high"] * {
+  border-width: 2px;
+}
+
+[data-contrast="high"] a,
+[data-contrast="high"] button {
+  text-decoration: underline;
+}
+
+/* -------------------------------------------------------------------
+   5. UTILITY CLASSES (Token-Driven)
+   ------------------------------------------------------------------- */
+
+.theme-surface {
+  background: var(--color-surface);
+}
+
+.theme-gradient {
+  background: var(--subject-gradient, var(--color-surface));
+}
+
+.theme-text {
+  color: var(--color-text);
+}
+
+.theme-text-muted {
+  color: var(--color-text-muted);
+}
+
+.theme-primary {
+  color: var(--color-primary);
+}
+
+.theme-border {
+  border-color: var(--color-border);
+}

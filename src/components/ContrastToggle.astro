@@ -1,0 +1,42 @@
+---
+---
+
+<div class="contrast-toggle">
+  <button
+    id="contrast-toggle"
+    class="px-3 py-2 text-sm rounded-button border border-border hover:bg-surface transition-colors"
+    aria-label="Toggle contrast mode"
+    title="Toggle high contrast mode"
+  >
+    <span id="contrast-icon">◐</span>
+  </button>
+</div>
+
+<script>
+  const toggle = document.getElementById('contrast-toggle');
+  const icon = document.getElementById('contrast-icon');
+
+  // Update icon based on current contrast mode
+  const updateIcon = () => {
+    const currentContrast = localStorage.getItem('contrast') || 'normal';
+    if (icon) {
+      icon.textContent = currentContrast === 'high' ? '◑' : '◐';
+    }
+  };
+
+  updateIcon();
+
+  toggle?.addEventListener('click', () => {
+    const currentContrast = localStorage.getItem('contrast') || 'normal';
+    const newContrast = currentContrast === 'high' ? 'normal' : 'high';
+    
+    window.dispatchEvent(new CustomEvent('contrast-change', { 
+      detail: { contrast: newContrast } 
+    }));
+    
+    updateIcon();
+  });
+
+  // Update icon when contrast changes from other sources
+  window.addEventListener('contrast-change', updateIcon);
+</script>

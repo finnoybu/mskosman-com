@@ -19,9 +19,24 @@ interface Props {
 const { lesson } = Astro.props;
 const { Content } = await lesson.render();
 const { data } = lesson;
+
+// Fetch matching standards for this lesson's subject and grade
+const allStandards = await getCollection('standards');
+const matchingStandards = allStandards.filter(
+  (standard) => 
+    standard.data.subject === data.subject && 
+    standard.data.grade === data.grade
+);
+
+// Generate canonical URL
+const canonicalUrl = `https://mskosman.com/lessons/${lesson.slug}`;
 ---
 
-<MainLayout title={`${data.title} - mskosman.com`}>
+<MainLayout
+  title={`${data.title} - mskosman.com`}
+  description={data.objective}
+  canonical={canonicalUrl}
+>
   <article class="max-w-4xl mx-auto">
     <div class="mb-8">
       <a
@@ -89,26 +104,6 @@ const { data } = lesson;
         </div>
       </div>
 
-      {data.standardsLinks.length > 0 && (
-        <div class="mb-6">
-          <h3 class="font-semibold text-gray-900 dark:text-gray-100 mb-2">Standards Links</h3>
-          <ul class="space-y-1">
-            {data.standardsLinks.map((link) => (
-              <li>
-                <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
-                >
-                  {link.label} →
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
       {data.tags.length > 0 && (
         <div class="mb-8">
           <h3 class="font-semibold text-gray-900 dark:text-gray-100 mb-2">Tags</h3>
@@ -119,6 +114,109 @@ const { data } = lesson;
               </span>
             ))}
           </div>
+        </div>
+      )}
+
+      {(data.standardsLinks.length > 0 || matchingStandards.length > 0) && (
+        <div class="mb-8 p-6 rounded-lg bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+            Standards & Resources
+          </h3>
+          
+          {data.standardsLinks.length > 0 && (
+            <div class="mb-4">
+              <h4 class="font-medium text-gray-900 dark:text-gray-100 mb-2">Quick Links</h4>
+              <ul class="space-y-1">
+                {data.standardsLinks.map((link) => (
+                  <li>
+                    <a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+                    >
+                      {link.label} →
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {matchingStandards.length > 0 && (
+            <div class="space-y-4">
+              {matchingStandards.map((standard) => (
+                <div class="border-t border-blue-200 dark:border-blue-900 pt-4 first:border-t-0 first:pt-0">
+                  <h4 class="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                    {standard.data.subject} - {GRADE_LABELS[standard.data.grade]}
+                    {standard.data.strand && ` (${standard.data.strand})`}
+                  </h4>
+                  
+                  {standard.data.solDocLinks.length > 0 && (
+                    <div class="mb-3">
+                      <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Virginia SOL Documents:
+                      </p>
+                      <ul class="text-sm space-y-1">
+                        {standard.data.solDocLinks.map((link) => (
+                          <li>
+                            <a
+                              href={link.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+                            >
+                              {link.label} →
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {standard.data.instructionalResources && standard.data.instructionalResources.length > 0 && (
+                    <div class="mb-3">
+                      <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Instructional Resources:
+                      </p>
+                      <ul class="text-sm space-y-1">
+                        {standard.data.instructionalResources.map((resource) => (
+                          <li>
+                            <a
+                              href={resource.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+                            >
+                              {resource.label} →
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {standard.data.notes && (
+                    <p class="text-sm text-gray-600 dark:text-gray-400 italic">
+                      {standard.data.notes}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          <p class="mt-4 text-xs text-gray-600 dark:text-gray-400 italic">
+            <strong>Note:</strong> Standards information is supplementary. Always verify with the latest official Virginia SOL documents at 
+            <a 
+              href="https://www.doe.virginia.gov/teaching-learning-assessment/student-assessment/standards-learning"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 underline"
+            >
+              doe.virginia.gov
+            </a>.
+          </p>
         </div>
       )}
     </div>

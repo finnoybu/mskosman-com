@@ -207,11 +207,105 @@ This creates 169 lessons (13 subjects × 13 grades) with structured content foll
 
 3. **Deploy**
    
-   The `dist/` folder contains the complete static site ready for deployment to:
-   - Netlify
-   - Vercel
-   - GitHub Pages
-   - Any static hosting service
+   The `dist/` folder contains the complete static site ready for deployment to any static hosting service.
+
+## Deployment
+
+### Cloudflare Pages
+
+1. **Push code to GitHub**
+   ```bash
+   git add .
+   git commit -m "Deploy Stage 3"
+   git push origin main
+   ```
+
+2. **Connect to Cloudflare Pages**
+   - Go to [dash.cloudflare.com](https://dash.cloudflare.com)
+   - Create a Pages project
+   - Connect your GitHub repository
+   - Set build command: `npm run build`
+   - Set publish directory: `dist/`
+   - Deploy
+
+3. **Add Security Headers** (in Cloudflare)
+   - Go to Rules → Transform Rules → Modify response headers
+   - Add the following headers:
+
+   ```
+   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'
+   X-Content-Type-Options: nosniff
+   X-Frame-Options: DENY
+   Referrer-Policy: strict-origin-when-cross-origin
+   X-UA-Compatible: IE=edge
+   Permissions-Policy: geolocation=(), microphone=(), camera=()
+   ```
+
+### Netlify
+
+1. **Connect to Netlify**
+   - Go to [netlify.com](https://netlify.com)
+   - Create a new site from Git
+   - Connect your GitHub repository
+   - Set build command: `npm run build`
+   - Set publish directory: `dist/`
+   - Deploy
+
+2. **Add Security Headers** (via `netlify.toml`)
+   
+   A `netlify.toml` file (if created) would configure:
+   ```toml
+   [[headers]]
+   for = "/*"
+   [headers.values]
+   Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'"
+   X-Content-Type-Options = "nosniff"
+   X-Frame-Options = "DENY"
+   Referrer-Policy = "strict-origin-when-cross-origin"
+   X-UA-Compatible = "IE=edge"
+   Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+   ```
+
+### Security Headers Explanation
+
+- **Content-Security-Policy** - Prevents XSS attacks by restricting resource sources
+- **X-Content-Type-Options** - Prevents MIME type sniffing
+- **X-Frame-Options** - Prevents clickjacking attacks
+- **Referrer-Policy** - Controls how much referrer information is shared
+- **X-UA-Compatible** - Ensures modern IE rendering
+- **Permissions-Policy** - Disables access to sensitive browser APIs
+
+### Environment Validation
+
+Before deploying to production:
+
+```bash
+# Validate TypeScript and ESLint
+npm run check
+
+# Run unit tests
+npm test
+
+# Run E2E tests
+npm run test:e2e
+
+# Build and preview
+npm run build
+npm run preview
+```
+
+### CI/CD Pipeline
+
+This project includes a GitHub Actions workflow (`.github/workflows/build.yml`) that automatically:
+- Runs `npm run check` on all pull requests and pushes
+- Runs `npm run build` to verify the site builds successfully
+- Reports build status
+
+All 199 pages (198 lessons + 404 error page) build successfully with:
+- ✅ Full TypeScript type checking
+- ✅ Dynamic sitemap generation (`/sitemap.xml`)
+- ✅ SEO meta tags (Open Graph, Twitter Card, canonical URLs)
+- ✅ Accessibility features (skip-to-content link, keyboard navigation, ARIA labels)
 
 ## Type Safety
 
