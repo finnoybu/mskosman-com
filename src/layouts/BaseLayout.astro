@@ -29,15 +29,41 @@ const {
     <SkipToContent />
     <slot />
     <script>
-      // Theme switcher
-      const theme = localStorage.getItem('theme') || 'light';
-      document.documentElement.setAttribute('data-theme', theme);
+      // Theme switcher with system preference support
+      function getSystemTheme() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
 
+      function applyTheme(themeSetting: string) {
+        let actualTheme: string;
+        
+        if (themeSetting === 'system') {
+          actualTheme = getSystemTheme();
+        } else {
+          actualTheme = themeSetting;
+        }
+        
+        document.documentElement.setAttribute('data-theme', actualTheme);
+      }
+
+      // Initialize theme on page load
+      const savedTheme = localStorage.getItem('theme') || 'system';
+      applyTheme(savedTheme);
+
+      // Listen for theme changes from the switcher
       window.addEventListener('theme-change', ((e: CustomEvent) => {
         const newTheme = e.detail.theme;
-        document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
+        applyTheme(newTheme);
       }) as EventListener);
+
+      // Listen for system theme changes when theme is set to 'system'
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        const currentTheme = localStorage.getItem('theme') || 'system';
+        if (currentTheme === 'system') {
+          applyTheme('system');
+        }
+      });
     </script>
   </body>
 </html>

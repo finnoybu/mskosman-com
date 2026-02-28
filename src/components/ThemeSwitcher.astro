@@ -28,11 +28,11 @@
         Dark
       </button>
       <button
-        data-theme="high-contrast"
+        data-theme="system"
         role="menuitem"
         class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
       >
-        High Contrast
+        System
       </button>
     </div>
   </div>
@@ -44,11 +44,11 @@
   const label = document.getElementById('theme-label');
   const buttons = menu?.querySelectorAll('[data-theme]');
 
-  // Update label based on current theme
+  // Update label based on current theme setting (not applied theme)
   const updateLabel = () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const themeSetting = localStorage.getItem('theme') || 'system';
     if (label) {
-      label.textContent = currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1).replace('-', ' ');
+      label.textContent = themeSetting.charAt(0).toUpperCase() + themeSetting.slice(1);
     }
   };
 

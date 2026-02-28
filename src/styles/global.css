@@ -17,13 +17,6 @@
     --focus-ring: 2px solid rgb(56 189 248);
   }
 
-  [data-theme='high-contrast'] {
-    --color-text: 255 255 255;
-    --color-background: 0 0 0;
-    --color-border: 255 255 255;
-    --focus-ring: 3px solid #ffff00;
-  }
-
   body {
     @apply bg-background text-text;
     color: rgb(var(--color-text));
@@ -34,12 +27,6 @@
   :focus-visible {
     outline: var(--focus-ring);
     outline-offset: 2px;
-  }
-
-  /* High contrast focus-visible with 3px offset */
-  [data-theme='high-contrast'] :focus-visible {
-    outline: 3px solid #ffff00;
-    outline-offset: 3px;
   }
 
   /* Ensure all interactive elements have focus-visible */
@@ -54,15 +41,6 @@
     outline-offset: 2px;
   }
 
-  [data-theme='high-contrast'] a:focus-visible,
-  [data-theme='high-contrast'] button:focus-visible,
-  [data-theme='high-contrast'] input:focus-visible,
-  [data-theme='high-contrast'] select:focus-visible,
-  [data-theme='high-contrast'] textarea:focus-visible {
-    outline: 3px solid #ffff00;
-    outline-offset: 3px;
-  }
-
   /* Ensure buttons are keyboard accessible */
   button {
     @apply cursor-pointer;
@@ -71,61 +49,6 @@
   /* Improve link visibility */
   a {
     @apply transition-colors;
-  }
-
-  /* High contrast specific styles */
-  [data-theme='high-contrast'] a {
-    text-decoration: underline;
-    color: #ffff00;
-  }
-
-  [data-theme='high-contrast'] a:hover {
-    text-decoration: underline;
-    color: #ffff00;
-    background-color: transparent;
-  }
-
-  /* Primary button style (with primary class or data-primary attribute) */
-  [data-theme='high-contrast'] button {
-    border: 2px solid #ffffff;
-    background-color: transparent;
-    color: #ffffff;
-    font-weight: bold;
-  }
-
-  [data-theme='high-contrast'] button:hover {
-    background-color: #ffffff;
-    color: #000000;
-  }
-
-  /* Primary buttons - use yellow for key actions */
-  [data-theme='high-contrast'] button[type="submit"],
-  [data-theme='high-contrast'] button.primary,
-  [data-theme='high-contrast'] button[data-primary="true"] {
-    background-color: #000000;
-    color: #ffff00;
-    border: 2px solid #ffff00;
-  }
-
-  [data-theme='high-contrast'] button[type="submit"]:hover,
-  [data-theme='high-contrast'] button.primary:hover,
-  [data-theme='high-contrast'] button[data-primary="true"]:hover {
-    background-color: #ffff00;
-    color: #000000;
-  }
-
-  [data-theme='high-contrast'] input,
-  [data-theme='high-contrast'] select,
-  [data-theme='high-contrast'] textarea {
-    border: 2px solid #ffffff;
-    background-color: #000000;
-    color: #ffffff;
-  }
-
-  [data-theme='high-contrast'] input::placeholder,
-  [data-theme='high-contrast'] textarea::placeholder {
-    color: #ffffff;
-    opacity: 0.7;
   }
 }
 
