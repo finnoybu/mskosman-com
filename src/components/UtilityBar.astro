@@ -1,109 +1,147 @@
 ---
+interface Props {
+  subject: string;
+  subjectSlug: string;
+  grade: string;
+  gradeSlug: string;
+  durationMinutes: number;
+}
+
+const { subject, subjectSlug, grade, gradeSlug, durationMinutes } = Astro.props;
 ---
 
-<div class="utility-bar border-b border-border bg-background">
-  <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-6 text-sm">
-    <!-- Print Button -->
-    <button
-      id="print-btn"
-      class="flex items-center gap-2 px-3 py-1 rounded border border-border hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-      aria-label="Print lesson"
-      title="Print this page"
-    >
-      <span>🖨️</span>
-      <span>Print</span>
-    </button>
-
-    <!-- Share & Bookmark Button -->
-    <div class="share-container relative">
-      <button
-        id="share-btn"
-        class="flex items-center gap-2 px-3 py-1 rounded border border-border hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-        aria-label="Share and bookmark options"
-        aria-haspopup="menu"
-        aria-expanded="false"
+<div class="utility-row border-b border-border py-4 mb-4">
+  <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <div class="flex flex-wrap items-center gap-2">
+      <a
+        href={`/subjects/${subjectSlug}`}
+        class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200 hover:bg-primary-200 dark:hover:bg-primary-800 transition-colors"
       >
-        <span>📤</span>
-        <span>Share</span>
-      </button>
-      
-      <div
-        id="share-menu"
-        role="menu"
-        class="hidden absolute left-0 mt-2 w-48 rounded border border-border bg-white dark:bg-gray-800 shadow-lg z-10"
+        {subject}
+      </a>
+      <a
+        href={`/grades/${gradeSlug}`}
+        class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
       >
-        <button
-          role="menuitem"
-          data-share="copy"
-          class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
-        >
-          Copy Link
-        </button>
-        <button
-          role="menuitem"
-          data-share="email"
-          class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
-        >
-          Email
-        </button>
-        <button
-          role="menuitem"
-          data-share="linkedin"
-          class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
-        >
-          LinkedIn
-        </button>
-        <button
-          role="menuitem"
-          data-share="twitter"
-          class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
-        >
-          Twitter (X)
-        </button>
-        <button
-          role="menuitem"
-          data-share="reddit"
-          class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
-        >
-          Reddit
-        </button>
-      </div>
+        {grade}
+      </a>
+      <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+        {durationMinutes} minutes
+      </span>
     </div>
 
-    <!-- Font Size Controls -->
-    <div class="flex items-center gap-2">
-      <label for="font-size-ctrl" class="text-xs font-medium">Font:</label>
+    <div class="flex flex-wrap items-center gap-2 text-sm md:justify-end">
       <button
-        id="font-decrease"
-        class="px-2 py-1 rounded border border-border hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-        aria-label="Decrease font size"
-        title="Decrease font size"
+        id="print-btn"
+        class="inline-flex items-center gap-2 text-gray-700 dark:text-gray-200 hover:text-primary-700 dark:hover:text-primary-300 underline-offset-2 hover:underline transition-colors"
+        aria-label="Print lesson page"
+        title="Print this page"
       >
-        –
+        <svg aria-hidden="true" class="h-[18px] w-[18px] text-primary-600 dark:text-primary-400" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M5 2a1 1 0 0 0-1 1v3h12V3a1 1 0 0 0-1-1H5Z" />
+          <path fill-rule="evenodd" d="M4 8a3 3 0 0 0-3 3v3a1 1 0 0 0 1 1h2v2a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-2h2a1 1 0 0 0 1-1v-3a3 3 0 0 0-3-3H4Zm2 7v1h8v-1H6Z" clip-rule="evenodd" />
+        </svg>
+        <span>Print</span>
       </button>
-      <div id="font-size-display" class="w-6 text-center text-xs text-gray-600 dark:text-gray-400">
-        100%
+
+      <span aria-hidden="true" class="h-5 w-px bg-border"></span>
+
+      <div class="share-container relative">
+        <button
+          id="share-btn"
+          class="inline-flex items-center gap-2 text-gray-700 dark:text-gray-200 hover:text-primary-700 dark:hover:text-primary-300 underline-offset-2 hover:underline transition-colors"
+          aria-label="Open share options"
+          aria-haspopup="menu"
+          aria-expanded="false"
+        >
+          <svg aria-hidden="true" class="h-[18px] w-[18px] text-primary-600 dark:text-primary-400" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M10 2a1 1 0 0 1 1 1v6.586l1.293-1.293a1 1 0 1 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 1.414-1.414L9 9.586V3a1 1 0 0 1 1-1Z" />
+            <path d="M4 11a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2h-2a1 1 0 1 0 0 2h2v3H4v-3h2a1 1 0 1 0 0-2H4Z" />
+          </svg>
+          <span>Share</span>
+        </button>
+
+        <div
+          id="share-menu"
+          role="menu"
+          class="hidden absolute right-0 mt-2 w-48 rounded border border-border bg-white dark:bg-gray-800 shadow-lg z-10"
+        >
+          <button
+            role="menuitem"
+            data-share="copy"
+            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            Copy Link
+          </button>
+          <button
+            role="menuitem"
+            data-share="email"
+            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            Email
+          </button>
+          <button
+            role="menuitem"
+            data-share="linkedin"
+            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            LinkedIn
+          </button>
+          <button
+            role="menuitem"
+            data-share="twitter"
+            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            Twitter (X)
+          </button>
+          <button
+            role="menuitem"
+            data-share="reddit"
+            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            Reddit
+          </button>
+        </div>
       </div>
-      <button
-        id="font-increase"
-        class="px-2 py-1 rounded border border-border hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-        aria-label="Increase font size"
-        title="Increase font size"
-      >
-        +
-      </button>
+
+      <span aria-hidden="true" class="h-5 w-px bg-border"></span>
+
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-2 text-gray-700 dark:text-gray-200">
+          <svg aria-hidden="true" class="h-[18px] w-[18px] text-primary-600 dark:text-primary-400" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M3 16a1 1 0 1 1 0-2h1.273l3.55-8.282a1 1 0 0 1 1.835 0L13.208 14H15a1 1 0 1 1 0 2h-2.46a1 1 0 0 1-.919-.607L10.8 13H7.2l-.82 2.393A1 1 0 0 1 5.46 16H3Zm5.286-5h3.428L10 6.2 8.286 11Z" />
+          </svg>
+          <span class="text-sm">Font Size:</span>
+        </span>
+        <button
+          id="font-increase"
+          class="inline-flex h-5 w-5 items-center justify-center rounded bg-primary-600 text-[13px] leading-none text-white hover:bg-primary-700 disabled:bg-gray-400 disabled:text-white disabled:cursor-not-allowed transition-colors"
+          aria-label="Increase font size"
+          title="Increase font size"
+          aria-disabled="false"
+        >
+          +
+        </button>
+        <button
+          id="font-decrease"
+          class="inline-flex h-5 w-5 items-center justify-center rounded bg-primary-600 text-[13px] leading-none text-white hover:bg-primary-700 disabled:bg-gray-400 disabled:text-white disabled:cursor-not-allowed transition-colors"
+          aria-label="Decrease font size"
+          title="Decrease font size"
+          aria-disabled="false"
+        >
+          -
+        </button>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-  // Print functionality
   const printBtn = document.getElementById('print-btn');
   printBtn?.addEventListener('click', () => {
     window.print();
   });
 
-  // Share functionality
   const shareBtn = document.getElementById('share-btn');
   const shareMenu = document.getElementById('share-menu');
   const shareItems = shareMenu?.querySelectorAll('[data-share]');
@@ -155,6 +193,7 @@
       const type = item.getAttribute('data-share');
       const url = window.location.href;
       const title = document.title;
+      const canShareNatively = typeof navigator.share === 'function';
 
       switch (type) {
         case 'copy':
@@ -166,7 +205,9 @@
               item.textContent = originalText;
             }, 2000);
           } catch (err) {
-            console.error('Failed to copy:', err);
+            if (canShareNatively) {
+              await navigator.share({ title, url });
+            }
           }
           break;
         case 'email':
@@ -200,40 +241,58 @@
   // Font size functionality
   const fontDecreaseBtn = document.getElementById('font-decrease');
   const fontIncreaseBtn = document.getElementById('font-increase');
-  const fontDisplay = document.getElementById('font-size-display');
 
-  const MIN_SIZE = 1;
-  const MAX_SIZE = 1.25;
-  const STEP = 0.125;
+  const FONT_SCALE = {
+    min: -2,
+    max: 2,
+    step: 0.0625,
+  };
 
-  function getFontSize(): number {
-    const stored = localStorage.getItem('fontSize');
-    return stored ? parseFloat(stored) : 1;
+  let offset = 0;
+
+  function getOffset(): number {
+    const stored = localStorage.getItem('fontSizeOffset');
+    const parsed = stored ? parseInt(stored, 10) : 0;
+    return Number.isNaN(parsed) ? 0 : parsed;
   }
 
-  function setFontSize(size: number) {
-    const clamped = Math.max(MIN_SIZE, Math.min(MAX_SIZE, size));
-    localStorage.setItem('fontSize', clamped.toString());
-    document.documentElement.style.setProperty('--font-size-base', `${clamped}rem`);
-    if (fontDisplay) {
-      fontDisplay.textContent = `${Math.round(clamped * 100)}%`;
+  function setButtonState(button: HTMLElement | null, disabled: boolean) {
+    if (!button) {
+      return;
     }
+
+    if (button instanceof HTMLButtonElement) {
+      button.disabled = disabled;
+    }
+    button.setAttribute('aria-disabled', disabled ? 'true' : 'false');
   }
 
-  // Initialize font size from storage
-  setFontSize(getFontSize());
+  function applyFontScale() {
+    document.documentElement.style.setProperty(
+      '--font-size-base',
+      `${1 + offset * FONT_SCALE.step}rem`
+    );
+    localStorage.setItem('fontSizeOffset', offset.toString());
+    setButtonState(fontIncreaseBtn, offset === FONT_SCALE.max);
+    setButtonState(fontDecreaseBtn, offset === FONT_SCALE.min);
+  }
+
+  offset = Math.max(FONT_SCALE.min, Math.min(FONT_SCALE.max, getOffset()));
+  applyFontScale();
 
   fontDecreaseBtn?.addEventListener('click', () => {
-    setFontSize(getFontSize() - STEP);
+    if (offset <= FONT_SCALE.min) {
+      return;
+    }
+    offset -= 1;
+    applyFontScale();
   });
 
   fontIncreaseBtn?.addEventListener('click', () => {
-    setFontSize(getFontSize() + STEP);
+    if (offset >= FONT_SCALE.max) {
+      return;
+    }
+    offset += 1;
+    applyFontScale();
   });
 </script>
-
-<style>
-  .utility-bar {
-    @apply sticky top-16 z-10;
-  }
-</style>
