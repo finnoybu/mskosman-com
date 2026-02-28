@@ -1,10 +1,12 @@
 Implement Stage 3.3: Utility Bar (Print / Share / Font Size).
 
-This adds an accessibility/utility strip below the header.
+This stage adds an accessibility-focused utility strip.
 
 Do NOT redesign page layout.
 Do NOT modify lesson schema.
-Do NOT introduce heavy dependencies.
+Do NOT change theme architecture.
+Do NOT reintroduce high-contrast theme.
+Keep implementation lightweight and accessible.
 
 ---
 
@@ -12,7 +14,7 @@ Do NOT introduce heavy dependencies.
 
 Insert utility bar directly below header and header divider.
 
-Utility bar appears on:
+It must appear on:
 
 - /lesson-plans
 - /subjects/*
@@ -20,93 +22,159 @@ Utility bar appears on:
 - /lessons/*
 - /standards/*
 
-It does NOT appear on homepage.
+It must NOT appear on:
+
+- /
+
+Ensure no layout shift when bar appears.
 
 ---
 
-## 2) Layout
+## 2) Layout & Visual Rules
 
-Horizontal strip containing:
+Utility bar is:
+
+- Horizontally aligned
+- Compact
+- Subtle
+- Non-dominant
+- Full-width container aligned with page content
+
+Structure:
 
 Print | Share & Bookmark | Font Size + / -
 
-Small, subtle, non-dominant.
+Spacing:
+- 16px vertical padding max
+- No heavy borders
+- Use subtle divider line below header
 
-Responsive and accessible.
+It should not visually compete with primary navigation.
 
 ---
 
-## 3) Print
+## 3) Print Functionality
 
-Implement print button:
+Print button:
 
 - Use window.print()
-- Add print styles:
+- No intermediate page
+- No route change
+
+Add print CSS:
+
+@media print {
   - Hide header
   - Hide utility bar
   - Hide theme dropdown
-  - Optimize lesson formatting
+  - Hide search inputs
+  - Hide navigation links
+  - Optimize lesson spacing
+  - Remove shadows
+  - Ensure body text is black on white
   - Preserve lesson title and metadata
-  - Improve spacing for paper
+}
+
+Print layout should feel intentional, not raw.
 
 ---
 
-## 4) Share & Bookmark
+## 4) Share & Bookmark Dropdown
 
-Implement dropdown:
+Implement dropdown with:
 
-Options:
 - Copy Link
 - Email
 - LinkedIn
 - Twitter (X)
 - Reddit
 
-Requirements:
+Behavior:
 
 - Accessible via keyboard
-- aria-expanded managed
+- aria-haspopup="menu"
+- aria-expanded managed correctly
 - Closes on outside click and Escape
-- Uses share URLs
-- If navigator.share is available, use it first
+- No layout shift
+- No icon-only ambiguity
+- If navigator.share is supported, use it first
+
+Copy Link should:
+
+- Use clipboard API
+- Provide temporary confirmation message
+- Not use alert()
 
 ---
 
 ## 5) Font Size Controls
 
-Add "+" and "–" controls.
+Controls:
 
-Adjust root token:
-
---font-size-base
+- "+" increase
+- "–" decrease
 
 Implementation:
 
-- Increase in small increments (e.g., 1rem → 1.125rem → 1.25rem)
-- Decrease with minimum bound
-- Persist in localStorage
-- Apply globally
-- Do not break layout
+Adjust:
 
-Font resizing must work across all themes.
+--font-size-base
 
----
+Constraints:
 
-## 6) Accessibility
+- Minimum 1rem
+- Maximum 1.25rem (for now)
+- Step increments 0.125rem
 
-- All controls keyboard accessible
-- Proper aria-labels
-- Clear focus-visible behavior
-- In high contrast mode, ensure controls are highly legible
+Persist in localStorage.
 
----
-
-## 7) Validation
+Apply globally via root CSS variable.
 
 Ensure:
 
-- No build errors
-- No layout shift
+- No layout breakage
+- No overflow issues
+- No clipping in cards
+- Works in Light, Dark, and System modes
+
+---
+
+## 6) Accessibility Requirements
+
+All controls must:
+
+- Be keyboard accessible
+- Have visible focus state
+- Have descriptive aria-label
+- Not rely on icon-only meaning
+- Not conflict with theme dropdown
+- Maintain sufficient non-text contrast (3:1)
+
+Do not introduce new accessibility regressions.
+
+---
+
+## 7) Performance Constraints
+
+- No large libraries
+- No social SDK embeds
+- No third-party tracking injection
+- No layout reflow loops
+- No heavy hydration
+
+Keep JS minimal.
+
+---
+
+## 8) Validation
+
+After implementation:
+
+- npm run build passes
 - No console errors
-- Utility bar hides in print view
-- Works in light, dark, and high contrast
+- Lighthouse Accessibility ≥ 90
+- Lighthouse Performance ≥ 95
+- No layout shift
+- Print preview renders cleanly
+- Font scaling works
+- Share dropdown works on keyboard and mouse
