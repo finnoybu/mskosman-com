@@ -1,0 +1,63 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+
+const canonicalUrl = 'https://mskosman.com/about';
+---
+
+<MainLayout
+  title="About - mskosman.com"
+  description="Learn about mskosman.com and our approach to Virginia SOL-aligned lesson planning"
+  canonical={canonicalUrl}
+>
+  <div class="max-w-4xl mx-auto">
+    <div class="mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+        About mskosman.com
+      </h1>
+    </div>
+
+    <div class="prose prose-lg dark:prose-invert max-w-none">
+      <div class="mb-8 p-8 rounded-lg bg-gray-50 dark:bg-gray-800 border border-border">
+        <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+          Our Mission
+        </h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          mskosman.com provides structured, standards-aligned lesson plans designed specifically for Virginia students. Our materials support homeschool families, tutors, and parents seeking supplemental instruction that aligns with state educational standards.
+        </p>
+      </div>
+
+      <div class="mb-8 p-8 rounded-lg bg-white dark:bg-gray-900 border border-border">
+        <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+          Our Approach
+        </h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          Each lesson plan is designed by a Virginia educator with careful attention to:
+        </p>
+        <ul class="space-y-2 text-gray-600 dark:text-gray-300">
+          <li>• Alignment with Virginia Standards of Learning (SOL)</li>
+          <li>• Clear learning objectives and assessment criteria</li>
+          <li>• Focused 15–20 minute instructional sessions</li>
+          <li>• Practical implementation for home and tutoring environments</li>
+        </ul>
+      </div>
+
+      <div class="mb-8 p-8 rounded-lg bg-gray-50 dark:bg-gray-800 border border-border">
+        <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+          Independent Development
+        </h2>
+        <p class="text-gray-600 dark:text-gray-300">
+          This site is independently developed and maintained. It is not affiliated with or endorsed by the Virginia Department of Education or any school district.
+        </p>
+      </div>
+    </div>
+
+    <div class="text-center mt-12">
+      <a
+        href="/lesson-plans"
+        class="px-8 py-3 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors inline-block"
+      >
+        Browse Lesson Plans
+      </a>
+    </div>
+  </div>
+</MainLayout>

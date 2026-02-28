@@ -1,0 +1,43 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+
+const canonicalUrl = 'https://mskosman.com/standards';
+---
+
+<MainLayout
+  title="Standards - mskosman.com"
+  description="Explore Virginia Standards of Learning (SOL) alignment for our lesson plans"
+  canonical={canonicalUrl}
+>
+  <div class="max-w-4xl mx-auto">
+    <div class="mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+        Virginia Standards of Learning
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+        All lesson plans on this site are aligned to the Virginia Standards of Learning (SOL), ensuring they meet state educational requirements.
+      </p>
+    </div>
+
+    <div class="p-8 rounded-lg bg-gray-50 dark:bg-gray-800 border border-border mb-8">
+      <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+        About SOL Alignment
+      </h2>
+      <p class="text-gray-600 dark:text-gray-300 mb-4">
+        Each lesson plan is carefully designed to address specific Virginia Standards of Learning objectives. This ensures that instruction is targeted, measurable, and aligned with state curriculum expectations.
+      </p>
+      <p class="text-gray-600 dark:text-gray-300">
+        Standards-aligned navigation and detailed standard breakdowns will be available soon.
+      </p>
+    </div>
+
+    <div class="text-center">
+      <a
+        href="/lesson-plans"
+        class="px-8 py-3 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors inline-block"
+      >
+        Browse Lesson Plans
+      </a>
+    </div>
+  </div>
+</MainLayout>
