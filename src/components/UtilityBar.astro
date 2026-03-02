@@ -1,0 +1,343 @@
+---
+import IncreaseIcon from '@/components/icons/IncreaseIcon.astro';
+import DecreaseIcon from '@/components/icons/DecreaseIcon.astro';
+import FontSizeIcon from '@/components/icons/FontSizeIcon.astro';
+import PrintIcon from '@/components/icons/PrintIcon.astro';
+import ShareIcon from '@/components/icons/ShareIcon.astro';
+import Pill from '@/components/ui/Pill.astro';
+import { SUBJECT_HUES, GRADE_HUES, type Subject, type Grade } from '@lib/constants';
+
+interface Props {
+  subject: string;
+  subjectSlug: string;
+  grade: string;
+  gradeSlug: string;
+  durationMinutes: number;
+}
+
+const { subject, subjectSlug, grade, gradeSlug, durationMinutes } = Astro.props;
+---
+
+<div class="utility-row utility-bar border-b border-border py-4 mb-4">
+  <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <div class="flex flex-wrap items-center gap-2">
+      <Pill 
+        type="subject" 
+        hue={SUBJECT_HUES[subject as Subject]} 
+        label={subject} 
+        href={`/subjects/${subjectSlug}`}
+      />
+      <Pill 
+        type="grade" 
+        hue={GRADE_HUES[gradeSlug as Grade]} 
+        label={grade} 
+        href={`/grades/${gradeSlug}`}
+      />
+      <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+        {durationMinutes} minutes
+      </span>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2 text-sm md:justify-end">
+      <button
+        id="print-btn"
+        class="inline-flex items-center gap-2 underline-offset-2 hover:underline transition-colors"
+        aria-label="Print lesson page"
+        title="Print this page"
+      >
+        <span class="utility-icon">
+          <PrintIcon />
+        </span>
+        <span>Print</span>
+      </button>
+
+      <span aria-hidden="true" class="h-5 w-px bg-border"></span>
+
+      <div class="share-container relative">
+        <button
+          id="share-btn"
+          class="inline-flex items-center gap-2 underline-offset-2 hover:underline transition-colors"
+          aria-label="Open share options"
+          aria-haspopup="menu"
+          aria-expanded="false"
+        >
+          <span class="utility-icon">
+            <ShareIcon />
+          </span>
+          <span>Share</span>
+        </button>
+
+        <div
+          id="share-menu"
+          role="menu"
+          class="hidden absolute right-0 mt-2 w-48 rounded border border-border bg-white dark:bg-gray-800 shadow-lg z-10"
+        >
+          <button
+            role="menuitem"
+            data-share="copy"
+            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            Copy Link
+          </button>
+          <button
+            role="menuitem"
+            data-share="email"
+            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            Email
+          </button>
+          <button
+            role="menuitem"
+            data-share="linkedin"
+            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            LinkedIn
+          </button>
+          <button
+            role="menuitem"
+            data-share="twitter"
+            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            Twitter (X)
+          </button>
+          <button
+            role="menuitem"
+            data-share="reddit"
+            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            Reddit
+          </button>
+        </div>
+      </div>
+
+      <span aria-hidden="true" class="h-5 w-px bg-border"></span>
+
+      <div class="font-control flex items-center gap-1">
+        <span class="inline-flex items-center gap-2">
+          <span class="utility-icon">
+            <FontSizeIcon />
+          </span>
+          <span class="text-sm">Font Size:</span>
+        </span>
+        <div class="font-control-buttons inline-flex items-center gap-0 rounded overflow-hidden">
+          <button
+            id="font-decrease"
+            class="font-step inline-flex h-5 w-5 items-center justify-center"
+            aria-label="Decrease font size"
+            title="Decrease font size"
+          >
+            <DecreaseIcon />
+          </button>
+          <button
+            id="font-increase"
+            class="font-step inline-flex h-5 w-5 items-center justify-center -ml-1"
+            aria-label="Increase font size"
+            title="Increase font size"
+          >
+            <IncreaseIcon />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const printBtn = document.getElementById('print-btn');
+  printBtn?.addEventListener('click', () => {
+    window.print();
+  });
+
+  const shareBtn = document.getElementById('share-btn');
+  const shareMenu = document.getElementById('share-menu');
+  const shareItems = shareMenu?.querySelectorAll('[data-share]');
+
+  shareBtn?.addEventListener('click', () => {
+    const isOpen = shareMenu?.classList.contains('hidden') === false;
+    if (isOpen) {
+      shareMenu?.classList.add('hidden');
+      shareBtn.setAttribute('aria-expanded', 'false');
+    } else {
+      shareMenu?.classList.remove('hidden');
+      shareBtn.setAttribute('aria-expanded', 'true');
+      (shareItems?.[0] as HTMLButtonElement)?.focus();
+    }
+  });
+
+  // Close share menu on outside click
+  document.addEventListener('click', (e) => {
+    if (!shareBtn?.contains(e.target as Node) && !shareMenu?.contains(e.target as Node)) {
+      shareMenu?.classList.add('hidden');
+      shareBtn?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Keyboard navigation for share menu
+  shareMenu?.addEventListener('keydown', (e: KeyboardEvent) => {
+    const items = Array.from(shareItems || []);
+    const currentIndex = items.indexOf(e.target as HTMLButtonElement);
+    
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextIndex = (currentIndex + 1) % items.length;
+      (items[nextIndex] as HTMLButtonElement).focus();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prevIndex = currentIndex <= 0 ? items.length - 1 : currentIndex - 1;
+      (items[prevIndex] as HTMLButtonElement).focus();
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      shareMenu?.classList.add('hidden');
+      shareBtn?.setAttribute('aria-expanded', 'false');
+      shareBtn?.focus();
+    }
+  });
+
+  // Share menu item click handlers
+  shareItems?.forEach((item) => {
+    item.addEventListener('click', async () => {
+      const type = item.getAttribute('data-share');
+      const url = window.location.href;
+      const title = document.title;
+      const canShareNatively = typeof navigator.share === 'function';
+
+      switch (type) {
+        case 'copy':
+          try {
+            await navigator.clipboard.writeText(url);
+            const originalText = item.textContent;
+            item.textContent = '✓ Copied!';
+            setTimeout(() => {
+              item.textContent = originalText;
+            }, 2000);
+          } catch (err) {
+            if (canShareNatively) {
+              await navigator.share({ title, url });
+            }
+          }
+          break;
+        case 'email':
+          window.location.href = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(url)}`;
+          break;
+        case 'linkedin':
+          window.open(
+            `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+            '_blank'
+          );
+          break;
+        case 'twitter':
+          window.open(
+            `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,
+            '_blank'
+          );
+          break;
+        case 'reddit':
+          window.open(
+            `https://reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`,
+            '_blank'
+          );
+          break;
+      }
+
+      shareMenu?.classList.add('hidden');
+      shareBtn?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Font size functionality
+  const fontDecreaseBtn = document.getElementById('font-decrease');
+  const fontIncreaseBtn = document.getElementById('font-increase');
+
+  const FONT_SCALE = {
+    min: -4,
+    max: 4,
+    step: 0.0625,
+  };
+
+  let offset = 0;
+
+  function getOffset(): number {
+    const stored = localStorage.getItem('fontSizeOffset');
+    const parsed = stored ? parseInt(stored, 10) : 0;
+    return Number.isNaN(parsed) ? 0 : parsed;
+  }
+
+  function applyFontScale() {
+    document.documentElement.style.setProperty(
+      '--font-size-base',
+      `${1 + offset * FONT_SCALE.step}rem`
+    );
+    localStorage.setItem('fontSizeOffset', offset.toString());
+    
+    if (fontIncreaseBtn instanceof HTMLButtonElement) {
+      fontIncreaseBtn.disabled = offset === FONT_SCALE.max;
+    }
+    if (fontDecreaseBtn instanceof HTMLButtonElement) {
+      fontDecreaseBtn.disabled = offset === FONT_SCALE.min;
+    }
+  }
+
+  offset = Math.max(FONT_SCALE.min, Math.min(FONT_SCALE.max, getOffset()));
+  applyFontScale();
+
+  fontDecreaseBtn?.addEventListener('click', () => {
+    if (offset <= FONT_SCALE.min) {
+      return;
+    }
+    offset -= 1;
+    applyFontScale();
+  });
+
+  fontIncreaseBtn?.addEventListener('click', () => {
+    if (offset >= FONT_SCALE.max) {
+      return;
+    }
+    offset += 1;
+    applyFontScale();
+  });
+</script>
+
+<style>
+  .utility-bar {
+    /* Standalone icon colors */
+    --utility-icon-color: var(--color-primary);
+
+    /* Segmented font buttons */
+    --utility-step-bg: var(--color-bg);
+    --utility-step-fg: var(--color-primary);
+    --utility-step-border: var(--color-primary);
+
+    --utility-step-disabled-bg: #f3f4f6;
+    --utility-step-disabled-fg: #9ca3af;
+    --utility-step-disabled-border: #e5e7eb;
+  }
+
+  [data-theme='dark'] .utility-bar {
+    --utility-step-disabled-bg: #374151;
+    --utility-step-disabled-fg: #6b7280;
+    --utility-step-disabled-border: #4b5563;
+  }
+
+  .utility-icon {
+    color: var(--utility-icon-color);
+  }
+
+  .utility-bar svg {
+    flex-shrink: 0;
+  }
+
+  .font-control svg {
+    display: block;
+  }
+
+  .font-step {
+    --utility-bg: var(--utility-step-bg);
+    --utility-fg: var(--utility-step-fg);
+  }
+
+  .font-step:disabled {
+    --utility-bg: var(--utility-step-disabled-bg);
+    --utility-fg: var(--utility-step-disabled-fg);
+    cursor: not-allowed;
+  }
+</style>

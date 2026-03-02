@@ -1,63 +1,97 @@
 ---
 import MainLayout from '@layouts/MainLayout.astro';
-import SearchBar from '@components/SearchBar.astro';
 
 const canonicalUrl = 'https://mskosman.com';
 ---
 
 <MainLayout
-  title="mskosman.com - Home"
-  description="Virginia SOL-aligned lesson plans for K-12 homeschool, tutoring, and extracurricular use"
+  title="mskosman.com - Standards-Aligned Lesson Plans for Virginia Students"
+  description="Structured, teacher-designed lessons aligned to the Virginia Standards of Learning (SOL), created to support homeschool families, tutors, and supplemental instruction"
   canonical={canonicalUrl}
 >
-  <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-12">
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-        Virginia SOL-Aligned Lesson Plans
+  <div class="max-w-5xl mx-auto">
+    <!-- Hero Section -->
+    <div class="text-center mb-16 py-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+        Standards-Aligned Lesson Plans for Virginia Students
       </h1>
-      <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
-        Homeschool, tutoring, and extracurricular lessons designed for 15–20 minute sessions
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-10">
+        Structured, teacher-designed lessons aligned to the Virginia Standards of Learning (SOL), created to support homeschool families, tutors, and supplemental instruction.
       </p>
-      <SearchBar />
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/lesson-plans"
+          class="px-8 py-3 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors"
+        >
+          Browse Lesson Plans
+        </a>
+        <a
+          href="/standards"
+          class="px-8 py-3 border-2 border-primary-600 text-primary-600 dark:text-primary-400 rounded-lg font-medium hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
+        >
+          Explore Standards
+        </a>
+      </div>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-8 mt-12">
-      <a
-        href="/subjects"
-        class="p-8 rounded-lg border-2 border-border hover:border-primary-500 transition-all bg-white dark:bg-gray-800 hover:shadow-lg"
-      >
-        <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-          Browse by Subject
-        </h2>
-        <p class="text-gray-600 dark:text-gray-300">
-          Explore lesson plans organized by subject area, from Computer Science to World Language.
-        </p>
-      </a>
-
-      <a
-        href="/grades"
-        class="p-8 rounded-lg border-2 border-border hover:border-primary-500 transition-all bg-white dark:bg-gray-800 hover:shadow-lg"
-      >
-        <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-          Browse by Grade
-        </h2>
-        <p class="text-gray-600 dark:text-gray-300">
-          Find lessons tailored to your student's grade level, from Kindergarten through 12th grade.
-        </p>
-      </a>
-    </div>
-
-    <div class="mt-16 p-6 rounded-lg bg-gray-50 dark:bg-gray-800 border border-border">
-      <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-        About These Lessons
+    <!-- About the Approach -->
+    <div class="mb-16 p-8 rounded-lg bg-gray-50 dark:bg-gray-800 border border-border">
+      <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">
+        About the Approach
       </h2>
-      <ul class="space-y-2 text-gray-600 dark:text-gray-300">
-        <li>✓ Aligned to Virginia Department of Education Standards of Learning (SOL)</li>
-        <li>✓ Designed for 15–20 minute focused sessions</li>
-        <li>✓ Structured with warm-up, instruction, practice, and assessment</li>
-        <li>✓ Includes differentiation strategies and extensions</li>
-        <li>✓ Perfect for homeschool, tutoring, or supplemental learning</li>
+      <ul class="space-y-3 text-gray-600 dark:text-gray-300">
+        <li class="flex items-start">
+          <span class="mr-3 text-primary-600 dark:text-primary-400">✓</span>
+          <span>Aligned to the Virginia Standards of Learning (SOL)</span>
+        </li>
+        <li class="flex items-start">
+          <span class="mr-3 text-primary-600 dark:text-primary-400">✓</span>
+          <span>Designed for focused 15–20 minute sessions</span>
+        </li>
+        <li class="flex items-start">
+          <span class="mr-3 text-primary-600 dark:text-primary-400">✓</span>
+          <span>Structured with clear objectives, guided instruction, and assessment</span>
+        </li>
+        <li class="flex items-start">
+          <span class="mr-3 text-primary-600 dark:text-primary-400">✓</span>
+          <span>Developed independently by a Virginia educator</span>
+        </li>
       </ul>
+    </div>
+
+    <!-- Who This Is For -->
+    <div class="mb-16 p-8 rounded-lg bg-white dark:bg-gray-900 border border-border">
+      <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">
+        Who This Is For
+      </h2>
+      <ul class="space-y-3 text-gray-600 dark:text-gray-300">
+        <li class="flex items-start">
+          <span class="mr-3 text-primary-600 dark:text-primary-400">•</span>
+          <span>Homeschool families seeking SOL alignment</span>
+        </li>
+        <li class="flex items-start">
+          <span class="mr-3 text-primary-600 dark:text-primary-400">•</span>
+          <span>Tutors reinforcing classroom instruction</span>
+        </li>
+        <li class="flex items-start">
+          <span class="mr-3 text-primary-600 dark:text-primary-400">•</span>
+          <span>Parents supplementing grade-level learning</span>
+        </li>
+        <li class="flex items-start">
+          <span class="mr-3 text-primary-600 dark:text-primary-400">•</span>
+          <span>Students preparing for assessments</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Closing CTA -->
+    <div class="text-center py-12">
+      <a
+        href="/lesson-plans"
+        class="px-8 py-3 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors inline-block"
+      >
+        Browse Lesson Plans
+      </a>
     </div>
   </div>
 </MainLayout>

@@ -1,3 +1,6 @@
+@import './theme.css';
+@import './tokens/colors.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,34 +9,40 @@
   :root {
     --color-text: 15 23 42;
     --color-background: 255 255 255;
-    --color-border: 226 232 240;
+    --color-border: 148 163 184;
+    --focus-ring: 2px solid rgb(14 165 233);
   }
 
   [data-theme='dark'] {
     --color-text: 248 250 252;
     --color-background: 15 23 42;
-    --color-border: 51 65 85;
-  }
-
-  [data-theme='high-contrast'] {
-    --color-text: 0 0 0;
-    --color-background: 255 255 255;
-    --color-border: 0 0 0;
+    --color-border: 148 163 184;
+    --focus-ring: 2px solid rgb(56 189 248);
   }
 
   body {
     @apply bg-background text-text;
     color: rgb(var(--color-text));
     background-color: rgb(var(--color-background));
+    font-size: var(--font-size-base);
   }
 
-  /* Visible focus styles for keyboard navigation */
-  a:focus,
-  button:focus,
-  input:focus,
-  select:focus,
-  textarea:focus {
-    @apply outline-2 outline-offset-2 outline-primary-600 dark:outline-primary-400;
+  /* Strong focus-visible styles for keyboard navigation */
+  :focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* Ensure all interactive elements have focus-visible */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [role="button"]:focus-visible,
+  [role="menuitem"]:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
   }
 
   /* Ensure buttons are keyboard accessible */
@@ -46,6 +55,7 @@
     @apply transition-colors;
   }
 }
+
 @layer utilities {
   .text-text {
     color: rgb(var(--color-text));
@@ -59,3 +69,101 @@
     border-color: rgb(var(--color-border));
   }
 }
+
+/* Print Styles */
+@media print {
+  /* Hide all non-content elements */
+  header {
+    display: none;
+  }
+
+  .utility-row,
+  .utility-bar {
+    display: none;
+  }
+
+  .theme-switcher {
+    display: none;
+  }
+
+  .contrast-toggle {
+    display: none;
+  }
+
+  nav {
+    display: none;
+  }
+
+  #search-input,
+  #search-results {
+    display: none;
+  }
+
+  .view-toggle {
+    display: none;
+  }
+
+  footer {
+    display: none;
+  }
+
+  /* Optimize body text for print */
+  body {
+    color: #000000;
+    background-color: #ffffff;
+  }
+
+  /* Remove shadows and backgrounds */
+  * {
+    box-shadow: none !important;
+  }
+
+  .theme-surface,
+  .bg-gray-50,
+  .bg-gray-100,
+  .bg-white,
+  .dark\:bg-gray-800,
+  .dark\:bg-gray-900 {
+    background-color: #ffffff !important;
+  }
+
+  /* Preserve lesson content spacing */
+  article {
+    page-break-inside: avoid;
+  }
+
+  h1,
+  h2,
+  h3 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  .prose p {
+    page-break-inside: avoid;
+    orphans: 2;
+    widows: 2;
+  }
+
+  /* Ensure links are visible in print */
+  a {
+    text-decoration: underline;
+    color: #0000ee;
+  }
+
+  /* Optimize container widths for print */
+  .container {
+    max-width: 100%;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  main {
+    padding: 0;
+    margin: 0;
+  }
+}
+

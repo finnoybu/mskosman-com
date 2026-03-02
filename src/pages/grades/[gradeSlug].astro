@@ -27,7 +27,7 @@ const canonicalUrl = `https://mskosman.com/grades/${grade}`;
 ---
 
 <MainLayout
-  title={`${GRADE_LABELS[grade]} Lessons - mskosman.com`}
+  title={`${GRADE_LABELS[grade]} Lesson Plans | mskosman.com`}
   description={`Explore ${lessons.length} ${GRADE_LABELS[grade]} lesson plans aligned to Virginia SOL standards`}
   canonical={canonicalUrl}
 >
@@ -118,7 +118,7 @@ const canonicalUrl = `https://mskosman.com/grades/${grade}`;
     )}
 
     {lessons.length > 0 ? (
-      <LessonCard lessons={lessons} />
+      <LessonCard lessons={lessons} hoverBy="subject" />
     ) : (
       <div class="text-center py-12">
         <p class="text-gray-500 dark:text-gray-400">

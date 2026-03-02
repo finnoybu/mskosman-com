@@ -1,0 +1,51 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+
+const canonicalUrl = 'https://mskosman.com/contact';
+---
+
+<MainLayout
+  title="Contact | mskosman.com"
+  description="Get in touch with mskosman.com"
+  canonical={canonicalUrl}
+>
+  <div class="max-w-4xl mx-auto">
+    <div class="mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+        Contact
+      </h1>
+    </div>
+
+    <div class="p-8 rounded-lg bg-gray-50 dark:bg-gray-800 border border-border mb-8">
+      <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+        Get in Touch
+      </h2>
+      <p class="text-gray-600 dark:text-gray-300 mb-6">
+        For inquiries about lesson plans, partnership opportunities, or general questions, please reach out:
+      </p>
+      <div class="text-gray-600 dark:text-gray-300">
+        <p class="mb-2">
+          <strong>Email:</strong> <a href="mailto:contact@mskosman.com" class="text-primary-600 dark:text-primary-400 hover:underline">contact@mskosman.com</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="p-8 rounded-lg bg-white dark:bg-gray-900 border border-border">
+      <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+        About the Developer
+      </h2>
+      <p class="text-gray-600 dark:text-gray-300">
+        mskosman.com is built and maintained by Ken Tannenbaum, an independent Virginia educator committed to providing high-quality, standards-aligned educational resources.
+      </p>
+    </div>
+
+    <div class="text-center mt-12">
+      <a
+        href="/lesson-plans"
+        class="px-8 py-3 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors inline-block"
+      >
+        Browse Lesson Plans
+      </a>
+    </div>
+  </div>
+</MainLayout>

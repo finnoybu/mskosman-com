@@ -4,39 +4,44 @@
 <div class="theme-switcher">
   <button
     id="theme-toggle"
-    class="px-3 py-2 text-sm rounded-md border border-border hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-    aria-label="Toggle theme"
+    class="inline-flex items-center justify-center gap-1 px-3 py-2 text-sm rounded-md border border-border hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors whitespace-nowrap"
+    aria-haspopup="menu"
+    aria-expanded="false"
   >
-    <span id="theme-label">Theme</span>
+    Theme <span aria-hidden="true">▾</span>
   </button>
   <div
     id="theme-menu"
-    class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 border border-border"
+    class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 border border-border z-10"
+    role="menu"
   >
-    <div class="py-1" role="menu">
+    <div class="py-1">
       <button
         data-theme="light"
         role="menuitem"
-        aria-label="Switch to light theme"
-        class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+        aria-selected="false"
+        class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-between"
       >
-        Light
+        <span>Light</span>
+        <span aria-hidden="true" class="checkmark hidden">✓</span>
       </button>
       <button
         data-theme="dark"
         role="menuitem"
-        aria-label="Switch to dark theme"
-        class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+        aria-selected="false"
+        class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-between"
       >
-        Dark
+        <span>Dark</span>
+        <span aria-hidden="true" class="checkmark hidden">✓</span>
       </button>
       <button
-        data-theme="high-contrast"
+        data-theme="system"
         role="menuitem"
-        aria-label="Switch to high contrast theme"
-        class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+        aria-selected="true"
+        class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-between"
       >
-        High Contrast
+        <span>System</span>
+        <span aria-hidden="true" class="checkmark">✓</span>
       </button>
     </div>
   </div>
@@ -45,27 +50,68 @@
 <script>
   const toggle = document.getElementById('theme-toggle');
   const menu = document.getElementById('theme-menu');
-  const label = document.getElementById('theme-label');
   const buttons = menu?.querySelectorAll('[data-theme]');
 
-  // Update label based on current theme
-  const updateLabel = () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-    if (label) {
-      label.textContent = currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1).replace('-', ' ');
-    }
+  // Update aria-selected and checkmark based on current theme setting
+  const updateSelection = () => {
+    const themeSetting = localStorage.getItem('theme') || 'system';
+    buttons?.forEach((button) => {
+      const theme = button.getAttribute('data-theme');
+      const isSelected = theme === themeSetting;
+      button.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+      
+      const checkmark = button.querySelector('.checkmark');
+      if (checkmark) {
+        if (isSelected) {
+          checkmark.classList.remove('hidden');
+        } else {
+          checkmark.classList.add('hidden');
+        }
+      }
+    });
   };
 
-  updateLabel();
+  updateSelection();
 
   toggle?.addEventListener('click', () => {
-    menu?.classList.toggle('hidden');
+    const isOpen = menu?.classList.contains('hidden') === false;
+    if (isOpen) {
+      menu?.classList.add('hidden');
+      toggle.setAttribute('aria-expanded', 'false');
+    } else {
+      menu?.classList.remove('hidden');
+      toggle.setAttribute('aria-expanded', 'true');
+      // Focus first menu item when opened
+      (buttons?.[0] as HTMLButtonElement)?.focus();
+    }
   });
 
   // Close menu when clicking outside
   document.addEventListener('click', (e) => {
     if (!toggle?.contains(e.target as Node) && !menu?.contains(e.target as Node)) {
       menu?.classList.add('hidden');
+      toggle?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Keyboard navigation for menu
+  menu?.addEventListener('keydown', (e: KeyboardEvent) => {
+    const items = Array.from(buttons || []);
+    const currentIndex = items.indexOf(e.target as HTMLButtonElement);
+    
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextIndex = (currentIndex + 1) % items.length;
+      (items[nextIndex] as HTMLButtonElement).focus();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prevIndex = currentIndex <= 0 ? items.length - 1 : currentIndex - 1;
+      (items[prevIndex] as HTMLButtonElement).focus();
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      menu?.classList.add('hidden');
+      toggle?.setAttribute('aria-expanded', 'false');
+      toggle?.focus();
     }
   });
 
@@ -74,8 +120,9 @@
       const theme = button.getAttribute('data-theme');
       if (theme) {
         window.dispatchEvent(new CustomEvent('theme-change', { detail: { theme } }));
-        updateLabel();
+        updateSelection();
         menu?.classList.add('hidden');
+        toggle?.setAttribute('aria-expanded', 'false');
       }
     });
   });

@@ -15,7 +15,7 @@
   --color-accent: #06b6d4;
   --color-text: #1e293b;
   --color-text-muted: #64748b;
-  --color-border: #e2e8f0;
+  --color-border: #94a3b8;
   
   /* Typography */
   --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
@@ -37,7 +37,7 @@
   --color-surface: #1e293b;
   --color-text: #f1f5f9;
   --color-text-muted: #94a3b8;
-  --color-border: #334155;
+  --color-border: #94a3b8;
 }
 
 /* -------------------------------------------------------------------
@@ -261,32 +261,7 @@
 }
 
 /* -------------------------------------------------------------------
-   4. ACCESSIBILITY / HIGH CONTRAST MODE (data-contrast)
-   ------------------------------------------------------------------- */
-
-[data-contrast="high"] {
-  --color-bg: #ffffff;
-  --color-surface: #ffffff;
-  --color-primary: #0000ee;
-  --color-accent: #551a8b;
-  --color-text: #000000;
-  --color-text-muted: #000000;
-  --color-border: #000000;
-  --shadow-card: none;
-  --shadow-card-hover: 0 0 0 3px #0000ee;
-}
-
-[data-contrast="high"] * {
-  border-width: 2px;
-}
-
-[data-contrast="high"] a,
-[data-contrast="high"] button {
-  text-decoration: underline;
-}
-
-/* -------------------------------------------------------------------
-   5. UTILITY CLASSES (Token-Driven)
+   4. UTILITY CLASSES (Token-Driven)
    ------------------------------------------------------------------- */
 
 .theme-surface {

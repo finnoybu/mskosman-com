@@ -1,53 +1,61 @@
 ---
-import { SUBJECTS, SUBJECT_SLUGS, GRADES, GRADE_LABELS } from '@lib/constants';
 import ThemeSwitcher from './ThemeSwitcher.astro';
-import ViewToggle from './ViewToggle.astro';
 
 const currentPath = Astro.url.pathname;
 ---
 
 <header class="border-b border-border bg-background sticky top-0 z-50">
   <div class="container mx-auto px-4 py-4">
-    <div class="flex items-center justify-between mb-4">
+    <div class="flex items-center justify-between">
+      <!-- Left: Logo -->
       <a href="/" class="text-2xl font-bold text-primary-600 dark:text-primary-400">
         mskosman.com
       </a>
+      
+      <!-- Center: Navigation -->
+      <nav class="flex items-center gap-6">
+        <a
+          href="/lesson-plans"
+          class:list={[
+            'text-sm font-medium transition-colors hover:text-primary-600',
+            currentPath.startsWith('/lesson-plans') ? 'text-primary-600' : 'text-gray-600 dark:text-gray-300'
+          ]}
+        >
+          Lesson Plans
+        </a>
+        <a
+          href="/standards"
+          class:list={[
+            'text-sm font-medium transition-colors hover:text-primary-600',
+            currentPath.startsWith('/standards') ? 'text-primary-600' : 'text-gray-600 dark:text-gray-300'
+          ]}
+        >
+          Standards
+        </a>
+        <a
+          href="/about"
+          class:list={[
+            'text-sm font-medium transition-colors hover:text-primary-600',
+            currentPath === '/about' ? 'text-primary-600' : 'text-gray-600 dark:text-gray-300'
+          ]}
+        >
+          About
+        </a>
+        <a
+          href="/contact"
+          class:list={[
+            'text-sm font-medium transition-colors hover:text-primary-600',
+            currentPath === '/contact' ? 'text-primary-600' : 'text-gray-600 dark:text-gray-300'
+          ]}
+        >
+          Contact
+        </a>
+      </nav>
+      
+      <!-- Right: Theme Switcher -->
       <div class="flex items-center gap-4">
         <ThemeSwitcher />
       </div>
     </div>
-    
-    <nav class="flex items-center justify-between">
-      <div class="flex items-center gap-6">
-        <a
-          href="/"
-          class:list={[
-            'text-sm font-medium transition-colors hover:text-primary-600',
-            currentPath === '/' ? 'text-primary-600' : 'text-gray-600 dark:text-gray-300'
-          ]}
-        >
-          Home
-        </a>
-        <a
-          href="/subjects"
-          class:list={[
-            'text-sm font-medium transition-colors hover:text-primary-600',
-            currentPath.startsWith('/subjects') ? 'text-primary-600' : 'text-gray-600 dark:text-gray-300'
-          ]}
-        >
-          Subjects
-        </a>
-        <a
-          href="/grades"
-          class:list={[
-            'text-sm font-medium transition-colors hover:text-primary-600',
-            currentPath.startsWith('/grades') ? 'text-primary-600' : 'text-gray-600 dark:text-gray-300'
-          ]}
-        >
-          Grades
-        </a>
-      </div>
-      <ViewToggle />
-    </nav>
   </div>
 </header>
