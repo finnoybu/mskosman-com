@@ -4,6 +4,8 @@ import DecreaseIcon from '@/components/icons/DecreaseIcon.astro';
 import FontSizeIcon from '@/components/icons/FontSizeIcon.astro';
 import PrintIcon from '@/components/icons/PrintIcon.astro';
 import ShareIcon from '@/components/icons/ShareIcon.astro';
+import Pill from '@/components/ui/Pill.astro';
+import { SUBJECT_HUES, GRADE_HUES, type Subject, type Grade } from '@lib/constants';
 
 interface Props {
   subject: string;
@@ -19,18 +21,18 @@ const { subject, subjectSlug, grade, gradeSlug, durationMinutes } = Astro.props;
 <div class="utility-row utility-bar border-b border-border py-4 mb-4">
   <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
     <div class="flex flex-wrap items-center gap-2">
-      <a
+      <Pill 
+        type="subject" 
+        hue={SUBJECT_HUES[subject as Subject]} 
+        label={subject} 
         href={`/subjects/${subjectSlug}`}
-        class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200 hover:bg-primary-200 dark:hover:bg-primary-800 transition-colors"
-      >
-        {subject}
-      </a>
-      <a
+      />
+      <Pill 
+        type="grade" 
+        hue={GRADE_HUES[gradeSlug as Grade]} 
+        label={grade} 
         href={`/grades/${gradeSlug}`}
-        class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-      >
-        {grade}
-      </a>
+      />
       <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
         {durationMinutes} minutes
       </span>

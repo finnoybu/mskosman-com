@@ -1,0 +1,109 @@
+/**
+ * SOL 16-Hue Color System
+ * Locked tokens with pre-validated ≥5.5:1 contrast
+ * DO NOT modify or regenerate from HSL
+ */
+
+:root {
+  /* Deep Cluster */
+  
+  /* H0 */
+  --sol-h0-light-bg: #f4d6d6;
+  --sol-h0-light-fg: #4d0a0a;
+  --sol-h0-dark-bg: #3f0a0a;
+  --sol-h0-dark-fg: #f7bfbf;
+
+  /* H18 */
+  --sol-h18-light-bg: #f4ddd6;
+  --sol-h18-light-fg: #4d1c0a;
+  --sol-h18-dark-bg: #3f140a;
+  --sol-h18-dark-fg: #f7ccb8;
+
+  /* H210 */
+  --sol-h210-light-bg: #d6e4f4;
+  --sol-h210-light-fg: #0a2e4d;
+  --sol-h210-dark-bg: #0a2340;
+  --sol-h210-dark-fg: #bfd9f7;
+
+  /* H225 */
+  --sol-h225-light-bg: #d6dcf4;
+  --sol-h225-light-fg: #0a1f4d;
+  --sol-h225-dark-bg: #0a1740;
+  --sol-h225-dark-fg: #bfcaf7;
+
+  /* H245 */
+  --sol-h245-light-bg: #dbd6f4;
+  --sol-h245-light-fg: #170a4d;
+  --sol-h245-dark-bg: #120a40;
+  --sol-h245-dark-fg: #c9bff7;
+
+  /* H265 */
+  --sol-h265-light-bg: #e6d6f4;
+  --sol-h265-light-fg: #260a4d;
+  --sol-h265-dark-bg: #1c0a40;
+  --sol-h265-dark-fg: #d9bff7;
+
+  /* H290 */
+  --sol-h290-light-bg: #f0d6f4;
+  --sol-h290-light-fg: #380a4d;
+  --sol-h290-dark-bg: #2b0a40;
+  --sol-h290-dark-fg: #eabff7;
+
+  /* H325 */
+  --sol-h325-light-bg: #f4d6e8;
+  --sol-h325-light-fg: #4d0a2f;
+  --sol-h325-dark-bg: #400a26;
+  --sol-h325-dark-fg: #f7bfdc;
+
+  /* Mid Cluster */
+  
+  /* H32 */
+  --sol-h32-light-bg: #f4e2d6;
+  --sol-h32-light-fg: #4d230a;
+  --sol-h32-dark-bg: #40200a;
+  --sol-h32-dark-fg: #f7d2bf;
+
+  /* H190 */
+  --sol-h190-light-bg: #d6edf4;
+  --sol-h190-light-fg: #0a3d4d;
+  --sol-h190-dark-bg: #083340;
+  --sol-h190-dark-fg: #bfe9f7;
+
+  /* Yellow/Green Cluster */
+  
+  /* H45 */
+  --sol-h45-light-bg: #f4efd6;
+  --sol-h45-light-fg: #4d3f0a;
+  --sol-h45-dark-bg: #40370a;
+  --sol-h45-dark-fg: #f7efbf;
+
+  /* H62 */
+  --sol-h62-light-bg: #eef4d6;
+  --sol-h62-light-fg: #444d0a;
+  --sol-h62-dark-bg: #38400a;
+  --sol-h62-dark-fg: #eaf7bf;
+
+  /* H85 */
+  --sol-h85-light-bg: #e3f4d6;
+  --sol-h85-light-fg: #334d0a;
+  --sol-h85-dark-bg: #2b400a;
+  --sol-h85-dark-fg: #daf7bf;
+
+  /* H110 */
+  --sol-h110-light-bg: #dbf4d6;
+  --sol-h110-light-fg: #1f4d0a;
+  --sol-h110-dark-bg: #16400a;
+  --sol-h110-dark-fg: #cdf7bf;
+
+  /* H145 */
+  --sol-h145-light-bg: #d6f4e2;
+  --sol-h145-light-fg: #0a4d26;
+  --sol-h145-dark-bg: #0a401d;
+  --sol-h145-dark-fg: #bff7d9;
+
+  /* H165 */
+  --sol-h165-light-bg: #d6f4ed;
+  --sol-h165-light-fg: #0a4d3c;
+  --sol-h165-dark-bg: #0a4033;
+  --sol-h165-dark-fg: #bff7ea;
+}

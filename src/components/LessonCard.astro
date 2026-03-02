@@ -10,17 +10,26 @@ interface Props {
       objective: string;
     };
   }>;
+  hoverBy?: 'subject' | 'grade';
 }
 
-const { lessons } = Astro.props;
-import { GRADE_LABELS } from '@lib/constants';
+const { lessons, hoverBy } = Astro.props;
+import { GRADE_LABELS, SUBJECT_HUES, GRADE_HUES, type Subject, type Grade } from '@lib/constants';
+import Pill from '@components/ui/Pill.astro';
 ---
 
 <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-  {lessons.map((lesson) => (
+  {lessons.map((lesson) => {
+    const subjectHue = SUBJECT_HUES[lesson.data.subject as Subject];
+    const gradeHue = GRADE_HUES[lesson.data.grade as Grade];
+    const hoverHue = hoverBy === 'grade' ? gradeHue : hoverBy === 'subject' ? subjectHue : null;
+    
+    return (
     <a
       href={`/lessons/${lesson.slug}`}
-      class="block p-6 rounded-lg border border-border hover:border-primary-500 hover:shadow-md transition-all bg-white dark:bg-gray-800"
+      class="lesson-card block p-6 rounded-lg border border-border hover:shadow-md transition-all bg-white dark:bg-gray-800"
+      data-hover-hue={hoverHue}
+      style={hoverHue ? `--hover-hue: ${hoverHue};` : undefined}
     >
       <div class="flex items-start justify-between mb-2">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
@@ -31,16 +40,71 @@ import { GRADE_LABELS } from '@lib/constants';
         </span>
       </div>
       <div class="flex gap-2 mb-3">
-        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200">
-          {lesson.data.subject}
-        </span>
-        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
-          {GRADE_LABELS[lesson.data.grade as keyof typeof GRADE_LABELS]}
-        </span>
+        <Pill 
+          type="subject" 
+          hue={SUBJECT_HUES[lesson.data.subject as Subject]} 
+          label={lesson.data.subject} 
+        />
+        <Pill 
+          type="grade" 
+          hue={GRADE_HUES[lesson.data.grade as Grade]} 
+          label={GRADE_LABELS[lesson.data.grade as Grade]} 
+        />
       </div>
       <p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
         {lesson.data.objective}
       </p>
     </a>
-  ))}
+    );
+  })}
 </div>
+
+<style>
+  .lesson-card:not([data-hover-hue]) {
+    /* Default hover for cards without context */
+    @apply hover:border-primary-500;
+  }
+
+  .lesson-card[data-hover-hue] {
+    /* Dynamic hover based on pill color */
+    &:hover {
+      border-color: var(--sol-h0-light-fg);
+    }
+  }
+
+  .lesson-card[data-hover-hue="0"]:hover { border-color: var(--sol-h0-light-fg); }
+  .lesson-card[data-hover-hue="18"]:hover { border-color: var(--sol-h18-light-fg); }
+  .lesson-card[data-hover-hue="32"]:hover { border-color: var(--sol-h32-light-fg); }
+  .lesson-card[data-hover-hue="45"]:hover { border-color: var(--sol-h45-light-fg); }
+  .lesson-card[data-hover-hue="62"]:hover { border-color: var(--sol-h62-light-fg); }
+  .lesson-card[data-hover-hue="85"]:hover { border-color: var(--sol-h85-light-fg); }
+  .lesson-card[data-hover-hue="110"]:hover { border-color: var(--sol-h110-light-fg); }
+  .lesson-card[data-hover-hue="145"]:hover { border-color: var(--sol-h145-light-fg); }
+  .lesson-card[data-hover-hue="165"]:hover { border-color: var(--sol-h165-light-fg); }
+  .lesson-card[data-hover-hue="190"]:hover { border-color: var(--sol-h190-light-fg); }
+  .lesson-card[data-hover-hue="210"]:hover { border-color: var(--sol-h210-light-fg); }
+  .lesson-card[data-hover-hue="225"]:hover { border-color: var(--sol-h225-light-fg); }
+  .lesson-card[data-hover-hue="245"]:hover { border-color: var(--sol-h245-light-fg); }
+  .lesson-card[data-hover-hue="265"]:hover { border-color: var(--sol-h265-light-fg); }
+  .lesson-card[data-hover-hue="290"]:hover { border-color: var(--sol-h290-light-fg); }
+  .lesson-card[data-hover-hue="325"]:hover { border-color: var(--sol-h325-light-fg); }
+
+  :root[data-theme='dark'] {
+    .lesson-card[data-hover-hue="0"]:hover { border-color: var(--sol-h0-dark-fg); }
+    .lesson-card[data-hover-hue="18"]:hover { border-color: var(--sol-h18-dark-fg); }
+    .lesson-card[data-hover-hue="32"]:hover { border-color: var(--sol-h32-dark-fg); }
+    .lesson-card[data-hover-hue="45"]:hover { border-color: var(--sol-h45-dark-fg); }
+    .lesson-card[data-hover-hue="62"]:hover { border-color: var(--sol-h62-dark-fg); }
+    .lesson-card[data-hover-hue="85"]:hover { border-color: var(--sol-h85-dark-fg); }
+    .lesson-card[data-hover-hue="110"]:hover { border-color: var(--sol-h110-dark-fg); }
+    .lesson-card[data-hover-hue="145"]:hover { border-color: var(--sol-h145-dark-fg); }
+    .lesson-card[data-hover-hue="165"]:hover { border-color: var(--sol-h165-dark-fg); }
+    .lesson-card[data-hover-hue="190"]:hover { border-color: var(--sol-h190-dark-fg); }
+    .lesson-card[data-hover-hue="210"]:hover { border-color: var(--sol-h210-dark-fg); }
+    .lesson-card[data-hover-hue="225"]:hover { border-color: var(--sol-h225-dark-fg); }
+    .lesson-card[data-hover-hue="245"]:hover { border-color: var(--sol-h245-dark-fg); }
+    .lesson-card[data-hover-hue="265"]:hover { border-color: var(--sol-h265-dark-fg); }
+    .lesson-card[data-hover-hue="290"]:hover { border-color: var(--sol-h290-dark-fg); }
+    .lesson-card[data-hover-hue="325"]:hover { border-color: var(--sol-h325-dark-fg); }
+  }
+</style>

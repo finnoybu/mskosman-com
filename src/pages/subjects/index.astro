@@ -1,6 +1,6 @@
 ---
 import MainLayout from '@layouts/MainLayout.astro';
-import { SUBJECTS, SUBJECT_SLUGS, type Subject } from '@lib/constants';
+import { SUBJECTS, SUBJECT_SLUGS, SUBJECT_HUES, type Subject } from '@lib/constants';
 import { getCollection } from 'astro:content';
 
 const allLessons = await getCollection('lessons');
@@ -28,7 +28,8 @@ const canonicalUrl = 'https://mskosman.com/subjects';
       {SUBJECTS.map((subject) => (
         <a
           href={`/subjects/${SUBJECT_SLUGS[subject]}`}
-          class="p-6 rounded-lg border border-border hover:border-primary-500 hover:shadow-md transition-all bg-white dark:bg-gray-800"
+          class="subject-card p-6 rounded-lg border border-border transition-all bg-white dark:bg-gray-800"
+          data-hue={SUBJECT_HUES[subject]}
         >
           <div class="flex items-center justify-between">
             <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -43,3 +44,184 @@ const canonicalUrl = 'https://mskosman.com/subjects';
     </div>
   </div>
 </MainLayout>
+
+<style>
+  /* Hover effects with saturated colors */
+  .subject-card[data-hue="0"]:hover {
+    border-color: var(--sol-h0-light-fg);
+    color: var(--sol-h0-light-fg);
+    box-shadow: 0 4px 12px var(--sol-h0-light-bg);
+  }
+  :root[data-theme='dark'] .subject-card[data-hue="0"]:hover {
+    border-color: var(--sol-h0-dark-fg);
+    color: var(--sol-h0-dark-fg);
+    box-shadow: 0 4px 12px var(--sol-h0-dark-bg);
+  }
+  
+  .subject-card[data-hue="18"]:hover {
+    border-color: var(--sol-h18-light-fg);
+    color: var(--sol-h18-light-fg);
+    box-shadow: 0 4px 12px var(--sol-h18-light-bg);
+  }
+  :root[data-theme='dark'] .subject-card[data-hue="18"]:hover {
+    border-color: var(--sol-h18-dark-fg);
+    color: var(--sol-h18-dark-fg);
+    box-shadow: 0 4px 12px var(--sol-h18-dark-bg);
+  }
+  
+  .subject-card[data-hue="32"]:hover {
+    border-color: var(--sol-h32-light-fg);
+    color: var(--sol-h32-light-fg);
+    box-shadow: 0 4px 12px var(--sol-h32-light-bg);
+  }
+  :root[data-theme='dark'] .subject-card[data-hue="32"]:hover {
+    border-color: var(--sol-h32-dark-fg);
+    color: var(--sol-h32-dark-fg);
+    box-shadow: 0 4px 12px var(--sol-h32-dark-bg);
+  }
+  
+  .subject-card[data-hue="45"]:hover {
+    border-color: var(--sol-h45-light-fg);
+    color: var(--sol-h45-light-fg);
+    box-shadow: 0 4px 12px var(--sol-h45-light-bg);
+  }
+  :root[data-theme='dark'] .subject-card[data-hue="45"]:hover {
+    border-color: var(--sol-h45-dark-fg);
+    color: var(--sol-h45-dark-fg);
+    box-shadow: 0 4px 12px var(--sol-h45-dark-bg);
+  }
+  
+  .subject-card[data-hue="62"]:hover {
+    border-color: var(--sol-h62-light-fg);
+    color: var(--sol-h62-light-fg);
+    box-shadow: 0 4px 12px var(--sol-h62-light-bg);
+  }
+  :root[data-theme='dark'] .subject-card[data-hue="62"]:hover {
+    border-color: var(--sol-h62-dark-fg);
+    color: var(--sol-h62-dark-fg);
+    box-shadow: 0 4px 12px var(--sol-h62-dark-bg);
+  }
+  
+  .subject-card[data-hue="85"]:hover {
+    border-color: var(--sol-h85-light-fg);
+    color: var(--sol-h85-light-fg);
+    box-shadow: 0 4px 12px var(--sol-h85-light-bg);
+  }
+  :root[data-theme='dark'] .subject-card[data-hue="85"]:hover {
+    border-color: var(--sol-h85-dark-fg);
+    color: var(--sol-h85-dark-fg);
+    box-shadow: 0 4px 12px var(--sol-h85-dark-bg);
+  }
+  
+  .subject-card[data-hue="110"]:hover {
+    border-color: var(--sol-h110-light-fg);
+    color: var(--sol-h110-light-fg);
+    box-shadow: 0 4px 12px var(--sol-h110-light-bg);
+  }
+  :root[data-theme='dark'] .subject-card[data-hue="110"]:hover {
+    border-color: var(--sol-h110-dark-fg);
+    color: var(--sol-h110-dark-fg);
+    box-shadow: 0 4px 12px var(--sol-h110-dark-bg);
+  }
+  
+  .subject-card[data-hue="145"]:hover {
+    border-color: var(--sol-h145-light-fg);
+    color: var(--sol-h145-light-fg);
+    box-shadow: 0 4px 12px var(--sol-h145-light-bg);
+  }
+  :root[data-theme='dark'] .subject-card[data-hue="145"]:hover {
+    border-color: var(--sol-h145-dark-fg);
+    color: var(--sol-h145-dark-fg);
+    box-shadow: 0 4px 12px var(--sol-h145-dark-bg);
+  }
+  
+  .subject-card[data-hue="165"]:hover {
+    border-color: var(--sol-h165-light-fg);
+    color: var(--sol-h165-light-fg);
+    box-shadow: 0 4px 12px var(--sol-h165-light-bg);
+  }
+  :root[data-theme='dark'] .subject-card[data-hue="165"]:hover {
+    border-color: var(--sol-h165-dark-fg);
+    color: var(--sol-h165-dark-fg);
+    box-shadow: 0 4px 12px var(--sol-h165-dark-bg);
+  }
+  
+  .subject-card[data-hue="190"]:hover {
+    border-color: var(--sol-h190-light-fg);
+    color: var(--sol-h190-light-fg);
+    box-shadow: 0 4px 12px var(--sol-h190-light-bg);
+  }
+  :root[data-theme='dark'] .subject-card[data-hue="190"]:hover {
+    border-color: var(--sol-h190-dark-fg);
+    color: var(--sol-h190-dark-fg);
+    box-shadow: 0 4px 12px var(--sol-h190-dark-bg);
+  }
+  
+  .subject-card[data-hue="210"]:hover {
+    border-color: var(--sol-h210-light-fg);
+    color: var(--sol-h210-light-fg);
+    box-shadow: 0 4px 12px var(--sol-h210-light-bg);
+  }
+  :root[data-theme='dark'] .subject-card[data-hue="210"]:hover {
+    border-color: var(--sol-h210-dark-fg);
+    color: var(--sol-h210-dark-fg);
+    box-shadow: 0 4px 12px var(--sol-h210-dark-bg);
+  }
+  
+  .subject-card[data-hue="225"]:hover {
+    border-color: var(--sol-h225-light-fg);
+    color: var(--sol-h225-light-fg);
+    box-shadow: 0 4px 12px var(--sol-h225-light-bg);
+  }
+  :root[data-theme='dark'] .subject-card[data-hue="225"]:hover {
+    border-color: var(--sol-h225-dark-fg);
+    color: var(--sol-h225-dark-fg);
+    box-shadow: 0 4px 12px var(--sol-h225-dark-bg);
+  }
+  
+  .subject-card[data-hue="245"]:hover {
+    border-color: var(--sol-h245-light-fg);
+    color: var(--sol-h245-light-fg);
+    box-shadow: 0 4px 12px var(--sol-h245-light-bg);
+  }
+  :root[data-theme='dark'] .subject-card[data-hue="245"]:hover {
+    border-color: var(--sol-h245-dark-fg);
+    color: var(--sol-h245-dark-fg);
+    box-shadow: 0 4px 12px var(--sol-h245-dark-bg);
+  }
+  
+  .subject-card[data-hue="265"]:hover {
+    border-color: var(--sol-h265-light-fg);
+    color: var(--sol-h265-light-fg);
+    box-shadow: 0 4px 12px var(--sol-h265-light-bg);
+  }
+  :root[data-theme='dark'] .subject-card[data-hue="265"]:hover {
+    border-color: var(--sol-h265-dark-fg);
+    color: var(--sol-h265-dark-fg);
+    box-shadow: 0 4px 12px var(--sol-h265-dark-bg);
+  }
+  
+  .subject-card[data-hue="290"]:hover {
+    border-color: var(--sol-h290-light-fg);
+    color: var(--sol-h290-light-fg);
+    box-shadow: 0 4px 12px var(--sol-h290-light-bg);
+  }
+  :root[data-theme='dark'] .subject-card[data-hue="290"]:hover {
+    border-color: var(--sol-h290-dark-fg);
+    color: var(--sol-h290-dark-fg);
+    box-shadow: 0 4px 12px var(--sol-h290-dark-bg);
+  }
+  
+  .subject-card[data-hue="325"]:hover {
+    border-color: var(--sol-h325-light-fg);
+    color: var(--sol-h325-light-fg);
+    box-shadow: 0 4px 12px var(--sol-h325-light-bg);
+  }
+  :root[data-theme='dark'] .subject-card[data-hue="325"]:hover {
+    border-color: var(--sol-h325-dark-fg);
+    color: var(--sol-h325-dark-fg);
+    box-shadow: 0 4px 12px var(--sol-h325-dark-bg);
+  }
+</style>
+
+
