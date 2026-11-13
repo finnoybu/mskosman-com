@@ -151,9 +151,135 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"lessons": {
-"computer-science-1.mdx": {
-	id: "computer-science-1.mdx";
-  slug: "computer-science-1";
+"computer-science-1-01-sorting-more-than-one-way.mdx": {
+	id: "computer-science-1-01-sorting-more-than-one-way.mdx";
+  slug: "computer-science-1-01-sorting-more-than-one-way";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-1-02-pattern-makers.mdx": {
+	id: "computer-science-1-02-pattern-makers.mdx";
+  slug: "computer-science-1-02-pattern-makers";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-1-03-plan-it-on-paper.mdx": {
+	id: "computer-science-1-03-plan-it-on-paper.mdx";
+  slug: "computer-science-1-03-plan-it-on-paper";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-1-04-if-and-again.mdx": {
+	id: "computer-science-1-04-if-and-again.mdx";
+  slug: "computer-science-1-04-if-and-again";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-1-05-when-this-happens.mdx": {
+	id: "computer-science-1-05-when-this-happens.mdx";
+  slug: "computer-science-1-05-when-this-happens";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-1-06-bug-hunt.mdx": {
+	id: "computer-science-1-06-bug-hunt.mdx";
+  slug: "computer-science-1-06-bug-hunt";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-1-07-hardware-and-software.mdx": {
+	id: "computer-science-1-07-hardware-and-software.mdx";
+  slug: "computer-science-1-07-hardware-and-software";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-1-08-same-parts-different-devices.mdx": {
+	id: "computer-science-1-08-same-parts-different-devices.mdx";
+  slug: "computer-science-1-08-same-parts-different-devices";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-1-09-tech-detective.mdx": {
+	id: "computer-science-1-09-tech-detective.mdx";
+  slug: "computer-science-1-09-tech-detective";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-1-10-okay-or-not-okay.mdx": {
+	id: "computer-science-1-10-okay-or-not-okay.mdx";
+  slug: "computer-science-1-10-okay-or-not-okay";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-1-11-be-safe-be-kind-speak-up.mdx": {
+	id: "computer-science-1-11-be-safe-be-kind-speak-up.mdx";
+  slug: "computer-science-1-11-be-safe-be-kind-speak-up";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-1-12-usernames-and-passwords.mdx": {
+	id: "computer-science-1-12-usernames-and-passwords.mdx";
+  slug: "computer-science-1-12-usernames-and-passwords";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-1-13-four-kinds-of-data.mdx": {
+	id: "computer-science-1-13-four-kinds-of-data.mdx";
+  slug: "computer-science-1-13-four-kinds-of-data";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-1-14-ask-collect-organize.mdx": {
+	id: "computer-science-1-14-ask-collect-organize.mdx";
+  slug: "computer-science-1-14-ask-collect-organize";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-1-15-what-does-the-data-say.mdx": {
+	id: "computer-science-1-15-what-does-the-data-say.mdx";
+  slug: "computer-science-1-15-what-does-the-data-say";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-1-16-with-or-without.mdx": {
+	id: "computer-science-1-16-with-or-without.mdx";
+  slug: "computer-science-1-16-with-or-without";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-1-17-learn-play-connect.mdx": {
+	id: "computer-science-1-17-learn-play-connect.mdx";
+  slug: "computer-science-1-17-learn-play-connect";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-1-18-faster-and-easier.mdx": {
+	id: "computer-science-1-18-faster-and-easier.mdx";
+  slug: "computer-science-1-18-faster-and-easier";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-1-19-find-out-and-reach-out.mdx": {
+	id: "computer-science-1-19-find-out-and-reach-out.mdx";
+  slug: "computer-science-1-19-find-out-and-reach-out";
   body: string;
   collection: "lessons";
   data: InferEntrySchema<"lessons">
