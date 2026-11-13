@@ -235,9 +235,107 @@ declare module 'astro:content' {
   collection: "lessons";
   data: InferEntrySchema<"lessons">
 } & { render(): Render[".mdx"] };
-"computer-science-k.mdx": {
-	id: "computer-science-k.mdx";
-  slug: "computer-science-k";
+"computer-science-k-01-sort-it-out.mdx": {
+	id: "computer-science-k-01-sort-it-out.mdx";
+  slug: "computer-science-k-01-sort-it-out";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-k-02-same-and-different.mdx": {
+	id: "computer-science-k-02-same-and-different.mdx";
+  slug: "computer-science-k-02-same-and-different";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-k-03-first-next-last.mdx": {
+	id: "computer-science-k-03-first-next-last.mdx";
+  slug: "computer-science-k-03-first-next-last";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-k-04-draw-the-plan.mdx": {
+	id: "computer-science-k-04-draw-the-plan.mdx";
+  slug: "computer-science-k-04-draw-the-plan";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-k-05-robot-helper.mdx": {
+	id: "computer-science-k-05-robot-helper.mdx";
+  slug: "computer-science-k-05-robot-helper";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-k-06-parts-of-a-computing-device.mdx": {
+	id: "computer-science-k-06-parts-of-a-computing-device.mdx";
+  slug: "computer-science-k-06-parts-of-a-computing-device";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-k-07-screens-all-around.mdx": {
+	id: "computer-science-k-07-screens-all-around.mdx";
+  slug: "computer-science-k-07-screens-all-around";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-k-08-gentle-hands-and-uh-oh-moments.mdx": {
+	id: "computer-science-k-08-gentle-hands-and-uh-oh-moments.mdx";
+  slug: "computer-science-k-08-gentle-hands-and-uh-oh-moments";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-k-09-our-technology-rules.mdx": {
+	id: "computer-science-k-09-our-technology-rules.mdx";
+  slug: "computer-science-k-09-our-technology-rules";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-k-10-private-or-okay-to-share.mdx": {
+	id: "computer-science-k-10-private-or-okay-to-share.mdx";
+  slug: "computer-science-k-10-private-or-okay-to-share";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-k-11-count-it-record-it.mdx": {
+	id: "computer-science-k-11-count-it-record-it.mdx";
+  slug: "computer-science-k-11-count-it-record-it";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-k-12-pictures-that-show-data.mdx": {
+	id: "computer-science-k-12-pictures-that-show-data.mdx";
+  slug: "computer-science-k-12-pictures-that-show-data";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-k-13-technology-around-us.mdx": {
+	id: "computer-science-k-13-technology-around-us.mdx";
+  slug: "computer-science-k-13-technology-around-us";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-k-14-technology-at-work.mdx": {
+	id: "computer-science-k-14-technology-at-work.mdx";
+  slug: "computer-science-k-14-technology-at-work";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-k-15-staying-connected.mdx": {
+	id: "computer-science-k-15-staying-connected.mdx";
+  slug: "computer-science-k-15-staying-connected";
   body: string;
   collection: "lessons";
   data: InferEntrySchema<"lessons">
