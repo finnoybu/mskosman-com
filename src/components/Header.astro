@@ -2,60 +2,107 @@
 import ThemeSwitcher from './ThemeSwitcher.astro';
 
 const currentPath = Astro.url.pathname;
+
+const links = [
+  { href: '/lesson-plans', label: 'Lesson Plans', active: currentPath.startsWith('/lesson-plans') },
+  { href: '/standards', label: 'Standards', active: currentPath.startsWith('/standards') },
+  { href: '/about', label: 'About', active: currentPath === '/about' },
+  { href: '/contact', label: 'Contact', active: currentPath === '/contact' },
+];
 ---
 
 <header class="border-b border-border bg-background sticky top-0 z-50">
-  <div class="container mx-auto px-4 py-4">
-    <div class="flex items-center justify-between">
+  <div class="container mx-auto px-4 py-3 md:py-4">
+    <div class="flex items-center justify-between gap-4">
       <!-- Left: Logo -->
-      <a href="/" class="text-2xl font-bold text-primary-600 dark:text-primary-400">
+      <a
+        href="/"
+        class="text-xl sm:text-2xl font-bold whitespace-nowrap text-primary-600 dark:text-primary-400"
+      >
         mskosman.com
       </a>
-      
-      <!-- Center: Navigation -->
-      <nav class="flex items-center gap-6">
-        <a
-          href="/lesson-plans"
-          class:list={[
-            'text-sm font-medium transition-colors hover:text-primary-600',
-            currentPath.startsWith('/lesson-plans') ? 'text-primary-600' : 'text-gray-600 dark:text-gray-300'
-          ]}
-        >
-          Lesson Plans
-        </a>
-        <a
-          href="/standards"
-          class:list={[
-            'text-sm font-medium transition-colors hover:text-primary-600',
-            currentPath.startsWith('/standards') ? 'text-primary-600' : 'text-gray-600 dark:text-gray-300'
-          ]}
-        >
-          Standards
-        </a>
-        <a
-          href="/about"
-          class:list={[
-            'text-sm font-medium transition-colors hover:text-primary-600',
-            currentPath === '/about' ? 'text-primary-600' : 'text-gray-600 dark:text-gray-300'
-          ]}
-        >
-          About
-        </a>
-        <a
-          href="/contact"
-          class:list={[
-            'text-sm font-medium transition-colors hover:text-primary-600',
-            currentPath === '/contact' ? 'text-primary-600' : 'text-gray-600 dark:text-gray-300'
-          ]}
-        >
-          Contact
-        </a>
+
+      <!-- Center: Navigation (tablet and up) -->
+      <nav class="hidden md:flex items-center gap-6" aria-label="Main">
+        {links.map((link) => (
+          <a
+            href={link.href}
+            aria-current={link.active ? 'page' : undefined}
+            class:list={[
+              'text-sm font-medium whitespace-nowrap transition-colors hover:text-primary-600',
+              link.active ? 'text-primary-600' : 'text-gray-600 dark:text-gray-300',
+            ]}
+          >
+            {link.label}
+          </a>
+        ))}
       </nav>
-      
-      <!-- Right: Theme Switcher -->
-      <div class="flex items-center gap-4">
+
+      <!-- Right: Theme Switcher + phone menu button -->
+      <div class="flex items-center gap-2">
         <ThemeSwitcher />
+        <button
+          id="nav-toggle"
+          type="button"
+          class="md:hidden print:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          aria-controls="mobile-nav"
+          aria-expanded="false"
+          aria-label="Open menu"
+        >
+          <svg class="nav-icon-open" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+          <svg class="nav-icon-close hidden" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+        </button>
       </div>
     </div>
+
+    <!-- Phone navigation panel -->
+    <nav id="mobile-nav" class="md:hidden print:hidden hidden mt-3 border-t border-border pt-2" aria-label="Main">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          aria-current={link.active ? 'page' : undefined}
+          class:list={[
+            'block rounded-md px-2 py-3 text-base font-medium transition-colors hover:bg-gray-100 dark:hover:bg-gray-800',
+            link.active ? 'text-primary-600' : 'text-gray-700 dark:text-gray-200',
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
   </div>
 </header>
+
+<script>
+  const navToggle = document.getElementById('nav-toggle');
+  const mobileNav = document.getElementById('mobile-nav');
+
+  const setOpen = (open: boolean) => {
+    if (!navToggle || !mobileNav) return;
+    mobileNav.classList.toggle('hidden', !open);
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    navToggle.querySelector('.nav-icon-open')?.classList.toggle('hidden', open);
+    navToggle.querySelector('.nav-icon-close')?.classList.toggle('hidden', !open);
+  };
+
+  navToggle?.addEventListener('click', () => {
+    setOpen(navToggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navToggle?.getAttribute('aria-expanded') === 'true') {
+      setOpen(false);
+      navToggle.focus();
+    }
+  });
+
+  // Close the panel if the window grows past the phone breakpoint.
+  window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
+    if (e.matches) setOpen(false);
+  });
+</script>

@@ -27,7 +27,7 @@ import Pill from '@components/ui/Pill.astro';
     return (
     <a
       href={`/lessons/${lesson.slug}`}
-      class="lesson-card block p-6 rounded-lg border border-border hover:shadow-md transition-all bg-white dark:bg-gray-800"
+      class="lesson-card block min-w-0 p-5 sm:p-6 rounded-lg border border-border hover:shadow-md transition-all bg-white dark:bg-gray-800"
       data-hover-hue={hoverHue}
       style={hoverHue ? `--hover-hue: ${hoverHue};` : undefined}
     >
@@ -35,11 +35,11 @@ import Pill from '@components/ui/Pill.astro';
         <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
           {lesson.data.title}
         </h3>
-        <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">
+        <span class="shrink-0 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 ml-2">
           {lesson.data.durationMinutes}min
         </span>
       </div>
-      <div class="flex gap-2 mb-3">
+      <div class="flex flex-wrap gap-2 mb-3">
         <Pill 
           type="subject" 
           hue={SUBJECT_HUES[lesson.data.subject as Subject]} 
