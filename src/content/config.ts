@@ -5,7 +5,9 @@ import { SUBJECTS, GRADES } from '@lib/constants';
 // - K.1, K.1a (Kindergarten) - standard two-part format
 // - 4.2, 4.2b (Grades 1-12) - standard two-part format
 // - MATH.4.1, CS.K.2 (subject prefix format) - three-part format
-const solCodeRegex = /^([A-Za-z]+\.)?(K|k|[0-9]{1,2})\.[0-9]+[a-z]*$/;
+// - K.AP.1, 3.CSY.2a, CSF.AP.1 (grade or course, strand, number) - the format
+//   VDOE uses in the 2024 Computer Science SOL
+const solCodeRegex = /^(([A-Za-z]+\.)?(K|k|[0-9]{1,2})\.[0-9]+[a-z]*|(K|k|[0-9]{1,2}|[A-Z]{2,5})\.[A-Z]{1,4}\.[0-9]+[a-z]*)$/;
 
 const lessonsCollection = defineCollection({
   type: 'content',

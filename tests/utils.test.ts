@@ -58,6 +58,14 @@ describe('Lesson Utils', () => {
       expect(isValidSOLCode('DLI.K.2')).toBe(true);
     });
 
+    it('should validate strand format (2024 Computer Science SOL)', () => {
+      expect(isValidSOLCode('K.AP.1')).toBe(true);
+      expect(isValidSOLCode('3.CSY.2a')).toBe(true);
+      expect(isValidSOLCode('CSF.AP.1')).toBe(true);
+      expect(isValidSOLCode('13.AP.1')).toBe(false);
+      expect(isValidSOLCode('K.ap.1')).toBe(false);
+    });
+
     it('should reject invalid formats', () => {
       expect(isValidSOLCode('K1')).toBe(false);
       expect(isValidSOLCode('K..1')).toBe(false);

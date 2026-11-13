@@ -9,7 +9,9 @@ const REQUIRED_SECTIONS = [
   '## Direct Instruction',
   '## Guided Practice',
   '## Independent Practice',
-  '## Closure',
+  '## Differentiation',
+  '## Extensions',
+  '## Notes for Parent/Instructor',
 ];
 
 let totalChecked = 0;
@@ -38,12 +40,8 @@ async function checkLessons() {
     const frontmatter = frontmatterMatch[1];
     const statusMatch = frontmatter.match(/status:\s*"(draft|published)"/);
     
-    if (!statusMatch) {
-      errors.push(`⚠️  ${file}: No status field found`);
-      continue;
-    }
-    
-    const status = statusMatch[1];
+    // A lesson with no status field is a draft, matching the schema default
+    const status = statusMatch ? statusMatch[1] : 'draft';
     
     if (status === 'draft') {
       draftCount++;

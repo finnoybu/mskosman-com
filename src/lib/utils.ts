@@ -20,7 +20,7 @@ export function generateLessonSlug(subject: string, grade: string, title: string
 
 /**
  * Validate SOL code format
- * Accepts: K.1, K.1a, 4.2, 4.2b, MATH.4.1, CS.K.2, DLI.K.2, etc.
+ * Accepts: K.1, K.1a, 4.2, 4.2b, MATH.4.1, CS.K.2, DLI.K.2, K.AP.1, CSF.AP.1, etc.
  * Rejects: grades > 12 (except K), invalid formats, extra dots
  */
 export function isValidSOLCode(code: string): boolean {
@@ -33,6 +33,18 @@ export function isValidSOLCode(code: string): boolean {
   const dotCount = (code.match(/\./g) || []).length;
   if (dotCount !== 1 && dotCount !== 2) {
     return false;
+  }
+
+  // Strand format used by the 2024 Computer Science SOL:
+  // K.AP.1, 3.CSY.2a (grade.strand.number) or CSF.AP.1 (course.strand.number)
+  const strandMatch = code.match(/^(K|k|[0-9]{1,2}|[A-Z]{2,5})\.[A-Z]{1,4}\.[0-9]+[a-z]*$/);
+  if (strandMatch) {
+    const first = strandMatch[1];
+    if (/^[0-9]+$/.test(first)) {
+      const gradeNum = parseInt(first, 10);
+      return gradeNum >= 1 && gradeNum <= 12;
+    }
+    return true;
   }
 
   // Basic format check
