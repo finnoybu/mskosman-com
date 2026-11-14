@@ -1299,9 +1299,177 @@ declare module 'astro:content' {
   collection: "lessons";
   data: InferEntrySchema<"lessons">
 } & { render(): Render[".mdx"] };
-"computer-science-8.mdx": {
-	id: "computer-science-8.mdx";
-  slug: "computer-science-8";
+"computer-science-8-01-scoping-a-program.mdx": {
+	id: "computer-science-8-01-scoping-a-program.mdx";
+  slug: "computer-science-8-01-scoping-a-program";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-02-illustrating-complex-algorithms.mdx": {
+	id: "computer-science-8-02-illustrating-complex-algorithms.mdx";
+  slug: "computer-science-8-02-illustrating-complex-algorithms";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-03-data-types-in-and-out.mdx": {
+	id: "computer-science-8-03-data-types-in-and-out.mdx";
+  slug: "computer-science-8-03-data-types-in-and-out";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-04-write-and-test.mdx": {
+	id: "computer-science-8-04-write-and-test.mdx";
+  slug: "computer-science-8-04-write-and-test";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-05-trace-and-diagnose.mdx": {
+	id: "computer-science-8-05-trace-and-diagnose.mdx";
+  slug: "computer-science-8-05-trace-and-diagnose";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-06-validate-and-improve.mdx": {
+	id: "computer-science-8-06-validate-and-improve.mdx";
+  slug: "computer-science-8-06-validate-and-improve";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-07-creative-commons.mdx": {
+	id: "computer-science-8-07-creative-commons.mdx";
+  slug: "computer-science-8-07-creative-commons";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-08-remixing-code.mdx": {
+	id: "computer-science-8-08-remixing-code.mdx";
+  slug: "computer-science-8-08-remixing-code";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-09-improving-a-device.mdx": {
+	id: "computer-science-8-09-improving-a-device.mdx";
+  slug: "computer-science-8-09-improving-a-device";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-10-writing-a-help-guide.mdx": {
+	id: "computer-science-8-10-writing-a-help-guide.mdx";
+  slug: "computer-science-8-10-writing-a-help-guide";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-11-cyber-attacks-and-their-impact.mdx": {
+	id: "computer-science-8-11-cyber-attacks-and-their-impact.mdx";
+  slug: "computer-science-8-11-cyber-attacks-and-their-impact";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-12-safe-practices-in-action.mdx": {
+	id: "computer-science-8-12-safe-practices-in-action.mdx";
+  slug: "computer-science-8-12-safe-practices-in-action";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-13-security-solutions-and-new-technology.mdx": {
+	id: "computer-science-8-13-security-solutions-and-new-technology.mdx";
+  slug: "computer-science-8-13-security-solutions-and-new-technology";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-14-how-organizations-protect-information.mdx": {
+	id: "computer-science-8-14-how-organizations-protect-information.mdx";
+  slug: "computer-science-8-14-how-organizations-protect-information";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-15-modeling-a-dynamic-system.mdx": {
+	id: "computer-science-8-15-modeling-a-dynamic-system.mdx";
+  slug: "computer-science-8-15-modeling-a-dynamic-system";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-16-refine-and-interpret.mdx": {
+	id: "computer-science-8-16-refine-and-interpret.mdx";
+  slug: "computer-science-8-16-refine-and-interpret";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-17-bias-in-data.mdx": {
+	id: "computer-science-8-17-bias-in-data.mdx";
+  slug: "computer-science-8-17-bias-in-data";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-18-presenting-findings.mdx": {
+	id: "computer-science-8-18-presenting-findings.mdx";
+  slug: "computer-science-8-18-presenting-findings";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-19-shared-data-and-the-internet.mdx": {
+	id: "computer-science-8-19-shared-data-and-the-internet.mdx";
+  slug: "computer-science-8-19-shared-data-and-the-internet";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-20-can-i-trust-this-source.mdx": {
+	id: "computer-science-8-20-can-i-trust-this-source.mdx";
+  slug: "computer-science-8-20-can-i-trust-this-source";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-21-access-and-ethics.mdx": {
+	id: "computer-science-8-21-access-and-ethics.mdx";
+  slug: "computer-science-8-21-access-and-ethics";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-22-screen-time-the-evidence.mdx": {
+	id: "computer-science-8-22-screen-time-the-evidence.mdx";
+  slug: "computer-science-8-22-screen-time-the-evidence";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-23-my-path-to-a-computing-career.mdx": {
+	id: "computer-science-8-23-my-path-to-a-computing-career.mdx";
+  slug: "computer-science-8-23-my-path-to-a-computing-career";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-24-designing-a-network.mdx": {
+	id: "computer-science-8-24-designing-a-network.mdx";
+  slug: "computer-science-8-24-designing-a-network";
+  body: string;
+  collection: "lessons";
+  data: InferEntrySchema<"lessons">
+} & { render(): Render[".mdx"] };
+"computer-science-8-25-data-on-the-move.mdx": {
+	id: "computer-science-8-25-data-on-the-move.mdx";
+  slug: "computer-science-8-25-data-on-the-move";
   body: string;
   collection: "lessons";
   data: InferEntrySchema<"lessons">
