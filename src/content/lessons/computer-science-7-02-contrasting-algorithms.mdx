@@ -1,0 +1,80 @@
+---
+title: "Contrasting Algorithms for Reasoning Problems"
+subject: "Computer Science"
+grade: "7"
+durationMinutes: 19
+solCodes: ["7.AP.1"]
+objective: "The student will contrast different algorithms that solve the same reasoning problem and judge them by correctness and efficiency."
+materials:
+  - "Paper and pencil"
+  - "A set of 16 numbered cards in order"
+  - "A logic puzzle, such as finding one heavier coin among nine with a balance scale"
+prerequisites: []
+standardsLinks:
+  - label: "2024 Computer Science SOL: Grade 7 (PDF)"
+    url: "https://www.doe.virginia.gov/home/showpublisheddocument/57042/638603660749370000"
+  - label: "VDOE Computer Science Standards of Learning"
+    url: "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/standards-of-learning"
+tags:
+  - "algorithms-and-programming"
+  - "algorithms"
+  - "efficiency"
+  - "reasoning"
+  - "unplugged"
+updatedAt: 2026-11-13
+---
+**Standards covered (2024 Virginia Computer Science SOL)**
+
+- **7.AP.1** The student will apply computational thinking to design programs to accomplish a task as a means of creative expression or scientific exploration.
+  - d. Contrast various algorithms to solve reasoning problems when accomplishing a task.
+
+## Prep
+
+- Number 16 cards and lay them face down in order.
+
+## Warm-up (3 minutes)
+
+Say, "I am thinking of a number from 1 to 100. Find it in as few guesses as you can." Play once, then ask what strategy the student used.
+
+## Direct Instruction (5 minutes)
+
+- Define a reasoning problem: one solved by logical steps, such as searching, deducing, or eliminating possibilities.
+- Present two search algorithms on the cards. Linear search checks each card in turn. Binary search checks the middle card and discards the half that cannot contain the target, repeating.
+- Count the steps for each in the worst case: 16 against about 4.
+- Introduce criteria for contrasting: always correct? how many steps as the problem grows? any requirements, such as binary search needing sorted data? how hard to carry out?
+
+## Guided Practice (7 minutes)
+
+1. The student runs both searches for three targets and records the steps.
+2. Ask, "What happens to each if the list doubles?"
+3. Attempt the coin puzzle two ways: weighing coins in pairs, and weighing in groups of three.
+4. Contrast the two using the criteria.
+
+## Independent Practice / Quick Check (4 minutes)
+
+The student writes a short contrast of two algorithms for one of the problems: how each works, how they differ in steps, and when each is the better choice.
+
+Look for:
+- Both algorithms are described accurately.
+- The contrast uses evidence such as step counts.
+- Requirements and tradeoffs are noted.
+
+## Differentiation
+
+**For students needing support**
+- Work with the two search algorithms only.
+- Use 8 cards.
+
+**For students ready for more**
+- Predict the worst case for 1,000 items for each search.
+- Design a third algorithm and place it in the comparison.
+
+## Extensions
+
+- Find the fastest strategy for a guessing game.
+- Contrast two strategies for solving a maze.
+
+## Notes for Parent/Instructor
+
+- The key insight is how the number of steps grows, not the count for one small example.
+- Binary search only works on sorted data. A fast algorithm can have requirements.
