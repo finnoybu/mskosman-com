@@ -5,17 +5,18 @@ import FontSizeIcon from '@/components/icons/FontSizeIcon.astro';
 import PrintIcon from '@/components/icons/PrintIcon.astro';
 import ShareIcon from '@/components/icons/ShareIcon.astro';
 import Pill from '@/components/ui/Pill.astro';
-import { SUBJECT_HUES, GRADE_HUES, type Subject, type Grade } from '@lib/constants';
+import { SUBJECT_HUES, type Subject } from '@lib/constants';
+import { levelPath, type Level } from '@lib/levels';
 
 interface Props {
-  subject: string;
+  subject: Subject;
   subjectSlug: string;
-  grade: string;
-  gradeSlug: string;
+  /** The lesson's grade or course; its pill links to that level's lesson list */
+  level: Level;
   durationMinutes: number;
 }
 
-const { subject, subjectSlug, grade, gradeSlug, durationMinutes } = Astro.props;
+const { subject, subjectSlug, level, durationMinutes } = Astro.props;
 ---
 
 <div class="utility-row utility-bar border-b border-border py-4 mb-4">
@@ -23,15 +24,15 @@ const { subject, subjectSlug, grade, gradeSlug, durationMinutes } = Astro.props;
     <div class="flex flex-wrap items-center gap-2">
       <Pill 
         type="subject" 
-        hue={SUBJECT_HUES[subject as Subject]} 
-        label={subject} 
+        hue={SUBJECT_HUES[subject]}
+        label={subject}
         href={`/subjects/${subjectSlug}`}
       />
-      <Pill 
-        type="grade" 
-        hue={GRADE_HUES[gradeSlug as Grade]} 
-        label={grade} 
-        href={`/grades/${gradeSlug}`}
+      <Pill
+        type="grade"
+        hue={level.hue}
+        label={level.label}
+        href={levelPath(subject, level)}
       />
       <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
         {durationMinutes} minutes

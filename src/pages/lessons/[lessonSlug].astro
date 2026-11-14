@@ -3,23 +3,56 @@ import MainLayout from '@layouts/MainLayout.astro';
 import UtilityBar from '@components/UtilityBar.astro';
 import { getCollection } from 'astro:content';
 import { GRADE_LABELS, SUBJECT_SLUGS } from '@lib/constants';
+import { lessonLevel, lessonsAt, levelPath } from '@lib/levels';
 import type { CollectionEntry } from 'astro:content';
+
+type LessonLink = { slug: string; title: string };
 
 export async function getStaticPaths() {
   const lessons = await getCollection('lessons');
-  return lessons.map((lesson) => ({
-    params: { lessonSlug: lesson.slug },
-    props: { lesson },
-  }));
+  const toLink = (entry?: CollectionEntry<'lessons'>): LessonLink | null =>
+    entry ? { slug: entry.slug, title: entry.data.title } : null;
+
+  // Lessons that share a subject and grade (or course), in teaching order
+  const groups = new Map<string, CollectionEntry<'lessons'>[]>();
+  const groupOf = (entry: CollectionEntry<'lessons'>) => {
+    const key = `${entry.data.subject}|${lessonLevel(entry.data).slug}`;
+    if (!groups.has(key)) {
+      groups.set(key, lessonsAt(lessons, entry.data.subject, lessonLevel(entry.data)));
+    }
+    return groups.get(key)!;
+  };
+
+  return lessons.map((lesson) => {
+    const siblings = groupOf(lesson);
+    const index = siblings.findIndex((entry) => entry.slug === lesson.slug);
+    return {
+      params: { lessonSlug: lesson.slug },
+      props: {
+        lesson,
+        position: index + 1,
+        total: siblings.length,
+        previous: toLink(siblings[index - 1]),
+        next: toLink(siblings[index + 1]),
+      },
+    };
+  });
 }
 
 interface Props {
   lesson: CollectionEntry<'lessons'>;
+  position: number;
+  total: number;
+  previous: LessonLink | null;
+  next: LessonLink | null;
 }
 
-const { lesson } = Astro.props;
+const { lesson, position, total, previous, next } = Astro.props;
 const { Content } = await lesson.render();
 const { data } = lesson;
+const level = lessonLevel(data);
+// A course name already says the subject ("Computer Science Foundations")
+const levelName = level.kind === 'course' ? level.label : `${level.label} ${data.subject}`;
 
 // Fetch matching standards for this lesson's subject and grade
 const allStandards = await getCollection('standards');
@@ -43,10 +76,18 @@ const canonicalUrl = `https://mskosman.com/lessons/${lesson.slug}`;
       <UtilityBar
         subject={data.subject}
         subjectSlug={SUBJECT_SLUGS[data.subject]}
-        grade={GRADE_LABELS[data.grade]}
-        gradeSlug={data.grade}
+        level={level}
         durationMinutes={data.durationMinutes}
       />
+
+      {total > 1 && (
+        <p class="mb-2 text-sm text-gray-600 dark:text-gray-400">
+          Lesson {position} of {total} in <a
+            href={levelPath(data.subject, level)}
+            class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 underline underline-offset-2"
+          >{levelName}</a>
+        </p>
+      )}
 
       <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
         {data.title}
@@ -218,6 +259,36 @@ const canonicalUrl = `https://mskosman.com/lessons/${lesson.slug}`;
     <div class="mt-8 text-sm text-gray-500 dark:text-gray-400">
       Last updated: {data.updatedAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
     </div>
+
+    {(previous || next) && (
+      <nav
+        aria-label={`More ${levelName} lessons`}
+        class="lesson-pager mt-8 pt-6 border-t border-border grid gap-4 sm:grid-cols-2 print:hidden"
+      >
+        {previous ? (
+          <a
+            href={`/lessons/${previous.slug}`}
+            rel="prev"
+            class="block min-w-0 p-4 rounded-lg border border-border hover:border-primary-500 transition-colors bg-white dark:bg-gray-800"
+          >
+            <span class="block text-sm text-gray-500 dark:text-gray-400">← Previous lesson</span>
+            <span class="block font-semibold text-gray-900 dark:text-gray-100">{previous.title}</span>
+          </a>
+        ) : (
+          <span class="hidden sm:block"></span>
+        )}
+        {next && (
+          <a
+            href={`/lessons/${next.slug}`}
+            rel="next"
+            class="block min-w-0 p-4 rounded-lg border border-border hover:border-primary-500 transition-colors bg-white dark:bg-gray-800 sm:text-right"
+          >
+            <span class="block text-sm text-gray-500 dark:text-gray-400">Next lesson →</span>
+            <span class="block font-semibold text-gray-900 dark:text-gray-100">{next.title}</span>
+          </a>
+        )}
+      </nav>
+    )}
   </article>
 </MainLayout>
 

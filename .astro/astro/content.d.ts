@@ -284,27 +284,6 @@ declare module 'astro:content' {
   collection: "lessons";
   data: InferEntrySchema<"lessons">
 } & { render(): Render[".mdx"] };
-"computer-science-10.mdx": {
-	id: "computer-science-10.mdx";
-  slug: "computer-science-10";
-  body: string;
-  collection: "lessons";
-  data: InferEntrySchema<"lessons">
-} & { render(): Render[".mdx"] };
-"computer-science-11.mdx": {
-	id: "computer-science-11.mdx";
-  slug: "computer-science-11";
-  body: string;
-  collection: "lessons";
-  data: InferEntrySchema<"lessons">
-} & { render(): Render[".mdx"] };
-"computer-science-12.mdx": {
-	id: "computer-science-12.mdx";
-  slug: "computer-science-12";
-  body: string;
-  collection: "lessons";
-  data: InferEntrySchema<"lessons">
-} & { render(): Render[".mdx"] };
 "computer-science-2-01-many-ways-to-sort.mdx": {
 	id: "computer-science-2-01-many-ways-to-sort.mdx";
   slug: "computer-science-2-01-many-ways-to-sort";
@@ -1470,13 +1449,6 @@ declare module 'astro:content' {
 "computer-science-8-25-data-on-the-move.mdx": {
 	id: "computer-science-8-25-data-on-the-move.mdx";
   slug: "computer-science-8-25-data-on-the-move";
-  body: string;
-  collection: "lessons";
-  data: InferEntrySchema<"lessons">
-} & { render(): Render[".mdx"] };
-"computer-science-9.mdx": {
-	id: "computer-science-9.mdx";
-  slug: "computer-science-9";
   body: string;
   collection: "lessons";
   data: InferEntrySchema<"lessons">

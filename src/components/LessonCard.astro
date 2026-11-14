@@ -5,24 +5,27 @@ interface Props {
     data: {
       title: string;
       subject: string;
-      grade: string;
+      grade?: Grade;
+      course?: Course;
       durationMinutes: number;
       objective: string;
     };
   }>;
+  /** Which pill colors the card border on hover; 'grade' means the grade or course */
   hoverBy?: 'subject' | 'grade';
 }
 
 const { lessons, hoverBy } = Astro.props;
-import { GRADE_LABELS, SUBJECT_HUES, GRADE_HUES, type Subject, type Grade } from '@lib/constants';
+import { SUBJECT_HUES, type Subject, type Grade, type Course } from '@lib/constants';
+import { lessonLevel } from '@lib/levels';
 import Pill from '@components/ui/Pill.astro';
 ---
 
 <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
   {lessons.map((lesson) => {
     const subjectHue = SUBJECT_HUES[lesson.data.subject as Subject];
-    const gradeHue = GRADE_HUES[lesson.data.grade as Grade];
-    const hoverHue = hoverBy === 'grade' ? gradeHue : hoverBy === 'subject' ? subjectHue : null;
+    const level = lessonLevel(lesson.data);
+    const hoverHue = hoverBy === 'grade' ? level.hue : hoverBy === 'subject' ? subjectHue : null;
     
     return (
     <a
@@ -47,8 +50,8 @@ import Pill from '@components/ui/Pill.astro';
         />
         <Pill 
           type="grade" 
-          hue={GRADE_HUES[lesson.data.grade as Grade]} 
-          label={GRADE_LABELS[lesson.data.grade as Grade]} 
+          hue={level.hue}
+          label={level.label}
         />
       </div>
       <p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">

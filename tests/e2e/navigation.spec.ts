@@ -27,11 +27,38 @@ test.describe('Navigation Flow', () => {
     await expect(page).toHaveURL(/\/subjects\/?$/);
     await expect(page.locator('h1')).toBeVisible();
 
-    await page.locator('main a[href="/subjects/mathematics"]').first().click();
-    await expect(page).toHaveURL(/\/subjects\/mathematics\/?$/);
+    await page.locator('main a[href="/subjects/computer-science"]').first().click();
+    await expect(page).toHaveURL(/\/subjects\/computer-science\/?$/);
     await expect(page.locator('h1')).toBeVisible();
 
-    await openFirstLesson(page, '/lessons/mathematics-k');
+    // Subject → grade → lessons in teaching order
+    await page.locator('main a[href="/subjects/computer-science/3"]').click();
+    await expect(page).toHaveURL(/\/subjects\/computer-science\/3\/?$/);
+    await expect(page.locator('h1')).toHaveText('3rd Grade Computer Science');
+
+    await openFirstLesson(page, '/lessons/computer-science-3-01-');
+    await expect(page.getByText(/Lesson 1 of \d+ in/)).toBeVisible();
+
+    // Step to the next lesson, then back up to the grade's list
+    const pager = page.locator('nav.lesson-pager');
+    await expect(pager.locator('a[rel="prev"]')).toHaveCount(0);
+    await pager.locator('a[rel="next"]').click();
+    await expect(page).toHaveURL(/\/lessons\/computer-science-3-02-/);
+    await expect(page.locator('nav.lesson-pager a[rel="prev"]')).toBeVisible();
+
+    await page.locator('article a[href="/subjects/computer-science/3"]').first().click();
+    await expect(page).toHaveURL(/\/subjects\/computer-science\/3\/?$/);
+  });
+
+  test('a subject lists its courses, and old placeholder grades are gone', async ({ page }) => {
+    await page.goto('/subjects/computer-science');
+    await expect(page.getByRole('heading', { name: 'Courses' })).toBeVisible();
+    await expect(page.getByText('Computer Science Foundations')).toBeVisible();
+
+    // Computer Science has no grade-level standards for Grades 9 to 12
+    await expect(page.locator('main a[href="/subjects/computer-science/9"]')).toHaveCount(0);
+    const response = await page.goto('/lessons/computer-science-9');
+    expect(response?.status()).toBe(404);
   });
 
   test('home → lesson plans → grades → grade detail → lesson', async ({ page }) => {
@@ -45,7 +72,16 @@ test.describe('Navigation Flow', () => {
     await expect(page).toHaveURL(/\/grades\/4\/?$/);
     await expect(page.locator('h1')).toBeVisible();
 
-    await openFirstLesson(page, '/lessons/');
+    // Grade → subject → lessons
+    await page.locator('main a[href="/grades/4/mathematics"]').click();
+    await expect(page).toHaveURL(/\/grades\/4\/mathematics\/?$/);
+    await expect(page.locator('h1')).toHaveText('4th Grade Mathematics');
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      'https://mskosman.com/subjects/mathematics/4'
+    );
+
+    await openFirstLesson(page, '/lessons/mathematics-4');
   });
 });
 
@@ -71,7 +107,16 @@ test.describe('Phone layout', () => {
     await panel.getByRole('link', { name: 'Lesson Plans' }).click();
     await expect(page).toHaveURL(/\/lesson-plans\/?$/);
 
-    for (const path of ['/', '/lesson-plans', '/grades/4', '/lessons/mathematics-4']) {
+    for (const path of [
+      '/',
+      '/lesson-plans',
+      '/grades/4',
+      '/grades/4/computer-science',
+      '/subjects/computer-science',
+      '/subjects/computer-science/6',
+      '/lessons/mathematics-4',
+      '/lessons/computer-science-6-04-variable-types-and-numeric-input',
+    ]) {
       await page.goto(path);
       const { scrollWidth, clientWidth } = await page.evaluate(() => ({
         scrollWidth: document.documentElement.scrollWidth,
