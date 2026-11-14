@@ -27,7 +27,8 @@ async function checkLessons() {
   
   for (const file of mdxFiles) {
     const filepath = join(lessonsDir, file);
-    const content = await readFile(filepath, 'utf-8');
+    // Normalize line endings so a Windows checkout (CRLF) is read the same way
+    const content = (await readFile(filepath, 'utf-8')).replace(/\r\n/g, '\n');
     totalChecked++;
     
     // Extract frontmatter

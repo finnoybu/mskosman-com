@@ -1,0 +1,103 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import BrowseCard from '@components/BrowseCard.astro';
+import { getCollection } from 'astro:content';
+import { SUBJECTS, SUBJECT_SLUGS } from '@lib/constants';
+import { lessonCountLabel, lessonsAt, levelPath, subjectLevels } from '@lib/levels';
+
+export async function getStaticPaths() {
+  const allLessons = await getCollection('lessons');
+
+  return SUBJECTS.map((subject) => {
+    const levels = subjectLevels(subject).map((level) => ({
+      level,
+      count: lessonsAt(allLessons, subject, level).length,
+    }));
+
+    return {
+      params: { subjectSlug: SUBJECT_SLUGS[subject] },
+      props: {
+        subject,
+        // Grades appear only when they have lessons; courses always appear
+        grades: levels.filter(({ level, count }) => level.kind === 'grade' && count > 0),
+        courses: levels.filter(({ level }) => level.kind === 'course'),
+        total: levels.reduce((sum, { count }) => sum + count, 0),
+      },
+    };
+  });
+}
+
+const { subject, grades, courses, total } = Astro.props;
+
+const canonicalUrl = `https://mskosman.com/subjects/${SUBJECT_SLUGS[subject]}`;
+---
+
+<MainLayout
+  title={`${subject} Lesson Plans | mskosman.com`}
+  description={`Explore ${total} ${subject} lesson plans aligned to Virginia SOL standards`}
+  canonical={canonicalUrl}
+>
+  <div class="max-w-4xl mx-auto">
+    <div class="mb-8">
+      <a
+        href="/subjects"
+        class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 mb-4 inline-block"
+      >
+        ← Back to Subjects
+      </a>
+      <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+        {subject}
+      </h1>
+      <p class="text-gray-600 dark:text-gray-300">
+        {lessonCountLabel(total)} available
+      </p>
+    </div>
+
+    {grades.length > 0 && (
+      <section class="mb-10" aria-labelledby="by-grade">
+        <h2 id="by-grade" class="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+          By grade
+        </h2>
+        <div class="grid gap-4 md:grid-cols-2">
+          {grades.map(({ level, count }) => (
+            <BrowseCard
+              title={level.label}
+              note={lessonCountLabel(count)}
+              hue={level.hue}
+              href={levelPath(subject, level)}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {courses.length > 0 && (
+      <section class="mb-10" aria-labelledby="by-course">
+        <h2 id="by-course" class="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+          Courses
+        </h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          Virginia sets these standards by course, not by grade.
+        </p>
+        <div class="grid gap-4 md:grid-cols-2">
+          {courses.map(({ level, count }) => (
+            <BrowseCard
+              title={level.label}
+              note={count > 0 ? lessonCountLabel(count) : 'Lessons in progress'}
+              hue={level.hue}
+              href={count > 0 ? levelPath(subject, level) : undefined}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {grades.length === 0 && courses.length === 0 && (
+      <div class="text-center py-12">
+        <p class="text-gray-500 dark:text-gray-400">
+          No lessons available yet for this subject.
+        </p>
+      </div>
+    )}
+  </div>
+</MainLayout>

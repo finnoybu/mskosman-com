@@ -1,5 +1,5 @@
 import { z, defineCollection } from 'astro:content';
-import { SUBJECTS, GRADES } from '@lib/constants';
+import { SUBJECTS, GRADES, COURSES, COURSE_SLUGS } from '@lib/constants';
 
 // SOL code validation regex - accepts formats like:
 // - K.1, K.1a (Kindergarten) - standard two-part format
@@ -7,14 +7,17 @@ import { SUBJECTS, GRADES } from '@lib/constants';
 // - MATH.4.1, CS.K.2 (subject prefix format) - three-part format
 // - K.AP.1, 3.CSY.2a, CSF.AP.1 (grade or course, strand, number) - the format
 //   VDOE uses in the 2024 Computer Science SOL
-const solCodeRegex = /^(([A-Za-z]+\.)?(K|k|[0-9]{1,2})\.[0-9]+[a-z]*|(K|k|[0-9]{1,2}|[A-Z]{2,5})\.[A-Z]{1,4}\.[0-9]+[a-z]*)$/;
+// - MSCSE-9.AP.4 (course with a 9, 18 or 36 week tier, strand, number)
+const solCodeRegex = /^(([A-Za-z]+\.)?(K|k|[0-9]{1,2})\.[0-9]+[a-z]*|(K|k|[0-9]{1,2}|[A-Z]{2,5}(-[0-9]{1,2})?)\.[A-Z]{1,4}\.[0-9]+[a-z]*)$/;
 
 const lessonsCollection = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
     subject: z.enum(SUBJECTS),
-    grade: z.enum(GRADES),
+    // A lesson belongs to a grade or to a course, never both (checked below)
+    grade: z.enum(GRADES).optional(),
+    course: z.enum(COURSE_SLUGS).optional(),
     status: z.enum(['draft', 'published']).default('draft'),
     durationMinutes: z.number().min(10).max(25).default(15),
     solCodes: z.array(z.string().regex(solCodeRegex, 'Invalid SOL code format')),
@@ -30,6 +33,20 @@ const lessonsCollection = defineCollection({
     tags: z.array(z.string()),
     updatedAt: z.date(),
   }).refine(
+    (data) => (data.grade === undefined) !== (data.course === undefined),
+    {
+      message: 'A lesson needs either a grade or a course, not both',
+      path: ['grade'],
+    }
+  ).refine(
+    (data) =>
+      data.course === undefined ||
+      COURSES.some((course) => course.slug === data.course && course.subject === data.subject),
+    {
+      message: 'This course does not belong to the lesson subject',
+      path: ['course'],
+    }
+  ).refine(
     (data) => {
       // If published, enforce stricter rules
       if (data.status === 'published') {

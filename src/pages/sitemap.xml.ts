@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import { SUBJECTS, SUBJECT_SLUGS, GRADES } from '@lib/constants';
+import { lessonsAt, levelPath, subjectLevels } from '@lib/levels';
 
 const BASE_URL = 'https://mskosman.com';
 
@@ -31,6 +32,20 @@ export async function GET() {
       changefreq: 'weekly',
       priority: '0.7',
     });
+  });
+
+  // Add subject and grade (or course) pages that have lessons.
+  // /grades/{grade}/{subject} shows the same list and is left out on purpose.
+  SUBJECTS.forEach((subject) => {
+    subjectLevels(subject)
+      .filter((level) => lessonsAt(lessons, subject, level).length > 0)
+      .forEach((level) => {
+        urls.push({
+          url: `${BASE_URL}${levelPath(subject, level)}`,
+          changefreq: 'weekly',
+          priority: '0.7',
+        });
+      });
   });
 
   // Add grade pages

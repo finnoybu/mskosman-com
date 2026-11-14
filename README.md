@@ -49,10 +49,14 @@ mskosman-com/
 │   │   ├── index.astro
 │   │   ├── subjects/
 │   │   │   ├── index.astro
-│   │   │   └── [subjectSlug].astro
+│   │   │   └── [subjectSlug]/
+│   │   │       ├── index.astro        # grades and courses of a subject
+│   │   │       └── [levelSlug].astro  # lessons of one grade or course
 │   │   ├── grades/
 │   │   │   ├── index.astro
-│   │   │   └── [gradeSlug].astro
+│   │   │   └── [gradeSlug]/
+│   │   │       ├── index.astro        # subjects of a grade
+│   │   │       └── [subjectSlug].astro
 │   │   ├── lessons/
 │   │   │   └── [lessonSlug].astro
 │   │   └── search-data.json.ts
@@ -113,7 +117,8 @@ Each lesson in `src/content/lessons/` must include the following frontmatter:
 ---
 title: "Lesson Title"
 subject: "Mathematics"  # Must be one of 13 defined subjects
-grade: "5"              # k, 1-12
+grade: "5"              # k, 1-12. Use `course` instead for a course lesson, never both
+# course: "computer-science-foundations"   # a slug from COURSES in src/lib/constants.ts
 durationMinutes: 15     # Default: 15
 solCodes:
   - "MATH.5.1"
@@ -168,9 +173,11 @@ The site includes lessons for these 13 Virginia SOL subject areas:
 
 - `/` - Home page with search
 - `/subjects` - Browse all subjects
-- `/subjects/[subjectSlug]` - Lessons for a specific subject
+- `/subjects/[subjectSlug]` - Grades and courses of a subject
+- `/subjects/[subjectSlug]/[levelSlug]` - Lessons for one grade or course, in teaching order
 - `/grades` - Browse all grades
-- `/grades/[gradeSlug]` - Lessons for a specific grade
+- `/grades/[gradeSlug]` - Subjects of a grade
+- `/grades/[gradeSlug]/[subjectSlug]` - The same lesson list, reached by grade first
 - `/lessons/[lessonSlug]` - Individual lesson page
 
 ## Theme System

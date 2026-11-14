@@ -1,26 +1,34 @@
 ---
 import MainLayout from '@layouts/MainLayout.astro';
-import LessonCard from '@components/LessonCard.astro';
+import BrowseCard from '@components/BrowseCard.astro';
 import { getCollection } from 'astro:content';
-import { GRADES, GRADE_LABELS, type Grade } from '@lib/constants';
+import { GRADES, GRADE_LABELS, SUBJECTS, SUBJECT_HUES, SUBJECT_SLUGS } from '@lib/constants';
+import { gradeLevel, lessonCountLabel, lessonsAt } from '@lib/levels';
 
 export async function getStaticPaths() {
   const allLessons = await getCollection('lessons');
   const allStandards = await getCollection('standards');
-  
-  return GRADES.map((grade) => ({
-    params: { gradeSlug: grade },
-    props: {
-      grade,
-      lessons: allLessons
-        .filter((lesson) => lesson.data.grade === grade)
-        .sort((a, b) => a.data.subject.localeCompare(b.data.subject)),
-      standards: allStandards.filter((standard) => standard.data.grade === grade),
-    },
-  }));
+
+  return GRADES.map((grade) => {
+    // Subjects that have lessons for this grade, alphabetically
+    const subjects = [...SUBJECTS]
+      .sort((a, b) => a.localeCompare(b))
+      .map((subject) => ({ subject, count: lessonsAt(allLessons, subject, gradeLevel(grade)).length }))
+      .filter(({ count }) => count > 0);
+
+    return {
+      params: { gradeSlug: grade },
+      props: {
+        grade,
+        subjects,
+        total: subjects.reduce((sum, { count }) => sum + count, 0),
+        standards: allStandards.filter((standard) => standard.data.grade === grade),
+      },
+    };
+  });
 }
 
-const { grade, lessons, standards } = Astro.props;
+const { grade, subjects, total, standards } = Astro.props;
 
 // Generate canonical URL
 const canonicalUrl = `https://mskosman.com/grades/${grade}`;
@@ -28,10 +36,10 @@ const canonicalUrl = `https://mskosman.com/grades/${grade}`;
 
 <MainLayout
   title={`${GRADE_LABELS[grade]} Lesson Plans | mskosman.com`}
-  description={`Explore ${lessons.length} ${GRADE_LABELS[grade]} lesson plans aligned to Virginia SOL standards`}
+  description={`Explore ${total} ${GRADE_LABELS[grade]} lesson plans aligned to Virginia SOL standards`}
   canonical={canonicalUrl}
 >
-  <div class="max-w-6xl mx-auto">
+  <div class="max-w-4xl mx-auto">
     <div class="mb-8">
       <a
         href="/grades"
@@ -39,11 +47,11 @@ const canonicalUrl = `https://mskosman.com/grades/${grade}`;
       >
         ← Back to Grades
       </a>
-      <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+      <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
         {GRADE_LABELS[grade]}
       </h1>
       <p class="text-gray-600 dark:text-gray-300">
-        {lessons.length} lesson{lessons.length !== 1 ? 's' : ''} available
+        {lessonCountLabel(total)} available
       </p>
     </div>
 
@@ -117,8 +125,22 @@ const canonicalUrl = `https://mskosman.com/grades/${grade}`;
       </div>
     )}
 
-    {lessons.length > 0 ? (
-      <LessonCard lessons={lessons} hoverBy="subject" />
+    {subjects.length > 0 ? (
+      <section aria-labelledby="by-subject">
+        <h2 id="by-subject" class="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+          By subject
+        </h2>
+        <div class="grid gap-4 md:grid-cols-2">
+          {subjects.map(({ subject, count }) => (
+            <BrowseCard
+              title={subject}
+              note={lessonCountLabel(count)}
+              hue={SUBJECT_HUES[subject]}
+              href={`/grades/${grade}/${SUBJECT_SLUGS[subject]}`}
+            />
+          ))}
+        </div>
+      </section>
     ) : (
       <div class="text-center py-12">
         <p class="text-gray-500 dark:text-gray-400">

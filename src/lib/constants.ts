@@ -113,3 +113,46 @@ export const GRADE_HUES: Record<Grade, number> = {
   '11': HUES[STAGGER[11]],
   '12': HUES[STAGGER[12]],
 };
+
+/**
+ * Courses: standards that VDOE organizes by named course instead of by grade.
+ * A lesson belongs to either a grade or a course, never both.
+ * `slug` is what a lesson's `course` field holds and what appears in the URL
+ * (/subjects/{subject}/{course}), so it must not collide with a grade slug.
+ */
+export const COURSES = [
+  {
+    slug: 'middle-school-computer-science-elective',
+    label: 'Middle School Computer Science Elective',
+    subject: 'Computer Science',
+  },
+  {
+    slug: 'computer-science-foundations',
+    label: 'Computer Science Foundations',
+    subject: 'Computer Science',
+  },
+  {
+    slug: 'computer-science-principles',
+    label: 'Computer Science Principles',
+    subject: 'Computer Science',
+  },
+  {
+    slug: 'computer-science-programming',
+    label: 'Computer Science Programming',
+    subject: 'Computer Science',
+  },
+] as const satisfies ReadonlyArray<{ slug: string; label: string; subject: Subject }>;
+
+export type Course = (typeof COURSES)[number]['slug'];
+
+export const COURSE_SLUGS = COURSES.map((course) => course.slug) as [Course, ...Course[]];
+
+/**
+ * Course hue: continues the grade stagger (grades use positions 0-12) by the
+ * course's position within its own subject.
+ */
+export function courseHue(slug: Course): number {
+  const course = COURSES.find((c) => c.slug === slug)!;
+  const position = COURSES.filter((c) => c.subject === course.subject).findIndex((c) => c.slug === slug);
+  return HUES[STAGGER[(GRADES.length + position) % STAGGER.length]];
+}

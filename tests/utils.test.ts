@@ -66,6 +66,15 @@ describe('Lesson Utils', () => {
       expect(isValidSOLCode('K.ap.1')).toBe(false);
     });
 
+    it('should validate tiered course codes (Middle School Computer Science Elective)', () => {
+      expect(isValidSOLCode('MSCSE-9.AP.4')).toBe(true);
+      expect(isValidSOLCode('MSCSE-18.AP.1')).toBe(true);
+      expect(isValidSOLCode('MSCSE-36.CYB.1a')).toBe(true);
+      expect(isValidSOLCode('MSCSE-.AP.1')).toBe(false);
+      expect(isValidSOLCode('MSCSE-9.1')).toBe(false);
+      expect(isValidSOLCode('9-MSCSE.AP.1')).toBe(false);
+    });
+
     it('should reject invalid formats', () => {
       expect(isValidSOLCode('K1')).toBe(false);
       expect(isValidSOLCode('K..1')).toBe(false);

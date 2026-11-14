@@ -1,17 +1,18 @@
-# Handoff: Computer Science lessons, state as of 2026-11-13
+# Handoff: Computer Science lessons, state as of 2026-11-14
 
 For the next Claude session and for Claude Code. Read this before writing more lessons or
 changing how lessons are organized.
 
 ## Where things stand
 
-- Kindergarten is merged to `main` (PR #5).
-- Grades 1 through 8 are committed on the local branch `content/cs-grades-2-8-lessons`, one
-  commit per grade. Check whether it has been pushed and merged before starting.
+- Kindergarten through Grade 8 are merged to `main` and live (PRs #5, #6, #15): 201 lessons.
 - Every lettered sub-item of the 2024 Computer Science SOL for K-8 is covered. Each grade has a
   coverage table in `standards-source/computer-science-grade-N-lessons.md`.
+- The site now accepts course lessons (see "How to add a course lesson" below).
 - Not yet written: the four Computer Science courses (below).
-- Still placeholders: every other subject, and `computer-science-9` through `computer-science-12`.
+- Still placeholders: every other subject. The `computer-science-9` through `computer-science-12`
+  placeholders are deleted.
+- The site build, unit tests and browser tests pass with all K-8 lessons in place.
 
 ## Ken's decisions so far
 
@@ -49,18 +50,49 @@ Notes:
   codes carry the tier: `MSCSE-9.AP.4`, `MSCSE-18.AP.1`. Read that section carefully before
   planning lessons. It was not parsed or verified in this session.
 - The SOL code validators (`src/content/config.ts` and `isValidSOLCode` in `src/lib/utils.ts`)
-  accept `CSF.AP.1`, `CSP.AP.1`, and `PRG.AP.1`. They do NOT accept the `MSCSE-9.AP.4` format
-  (hyphen and digits in the prefix). Widen them, with a test, before adding elective lessons.
+  accept `CSF.AP.1`, `CSP.AP.1`, `PRG.AP.1`, and the tiered elective format `MSCSE-9.AP.4`,
+  `MSCSE-18.AP.1`, `MSCSE-36.CYB.1a`.
 
-### Site work needed (Claude Code)
+### Site work done (Claude Code, 2026-11-14)
 
-- A lesson has either a `grade` or a `course`, never both. The schema currently requires `grade`.
-- Browsing becomes Subject, then grade or course, then lessons.
-- Delete `src/content/lessons/computer-science-9.mdx` through `computer-science-12.mdx`.
-- Course lessons cannot go into `src/content/lessons/` until the schema accepts `course`. Until
-  then, write them to a staging folder outside `src/`.
-- The same split will be needed for the upper years of Mathematics, Science, and History and
-  Social Science, which also switch from grades to named courses.
+- A lesson has either a `grade` or a `course`, never both. The build fails with a clear message
+  if a lesson has both, has neither, or names a course that belongs to another subject.
+- Browsing is Subject, then grade or course, then lessons in teaching order:
+  `/subjects/computer-science`, then `/subjects/computer-science/3` or
+  `/subjects/computer-science/computer-science-foundations`. Grade first also works:
+  `/grades/4`, then `/grades/4/computer-science`.
+- Teaching order is the file name order, so keep numbering lesson files `-01-`, `-02-`, and so on.
+  Each lesson page shows "Lesson 3 of 21" and links to the previous and next lesson.
+- A course with no lessons yet is shown on its subject page as "Lessons in progress" and gets
+  its own page as soon as it has one lesson.
+- `computer-science-9.mdx` through `computer-science-12.mdx` are deleted.
+
+### How to add a course lesson
+
+- Put the file in `src/content/lessons/` like any other lesson. No staging folder is needed.
+- In the frontmatter, leave out `grade` and add `course` with one of these slugs:
+
+| Course | `course:` value | Suggested file name |
+|---|---|---|
+| Middle School Computer Science Elective | `middle-school-computer-science-elective` | `computer-science-mscse-01-short-title.mdx` |
+| Computer Science Foundations | `computer-science-foundations` | `computer-science-csf-01-short-title.mdx` |
+| Computer Science Principles | `computer-science-principles` | `computer-science-csp-01-short-title.mdx` |
+| Computer Science Programming | `computer-science-programming` | `computer-science-prg-01-short-title.mdx` |
+
+- The file name becomes the lesson's address, and file name order within a course is teaching
+  order. Any name works as long as each course's files sort in the order they should be taught.
+- For the elective, one course holds all three tiers. If lessons should be grouped by tier,
+  number them so the 9-week lessons sort first, then 18-week, then 36-week.
+- `tools/fin.py` assumes a grade. Adapt it for courses before using it.
+
+### How to add courses for another subject
+
+- Add the course to `COURSES` in `src/lib/constants.ts` (slug, label, subject). The slug must not
+  be a grade slug (`k`, `1` to `12`). Nothing else needs to change: the schema, the subject page,
+  the sitemap and search pick it up.
+- This will be needed for the upper years of Mathematics, Science, and History and Social
+  Science, which also switch from grades to named courses. Delete their Grade 9 to 12
+  placeholders when the real courses are known.
 
 ### Subjects that will need their own decision
 
@@ -99,10 +131,13 @@ The tools were written for this session's environment and have hardcoded paths
 
 ## Limits to keep in mind
 
-- The site build, unit tests, and browser tests could not be run in the session that wrote
-  Grades 1 to 8. Ken ran them for Kindergarten only. Run them before merging.
+- The site build, unit tests, and browser tests cannot be run in the Claude Desktop session.
+  Claude Code runs them (`npm run check`, `npm run build`, `npx vitest run`,
+  `npx playwright test`). Ask for a run before each merge.
 - `.astro/astro/content.d.ts` is tracked in git even though `.astro` is ignored. It was updated
-  by hand for each grade. A real build may regenerate it slightly differently.
+  by hand for each grade, and a real build produced the same file. Because every grade or course
+  commit edits it, separate branches conflict with each other: open one pull request at a time
+  against `main`, and do not stack them.
 - No educator has reviewed any lesson.
 - Pushing is not possible from the Claude session. Ken pushes from his terminal.
 - Some lessons ask the instructor to find a current source first (laws, Virginia's economy,
