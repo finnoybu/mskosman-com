@@ -1,0 +1,81 @@
+---
+title: "Reliable Delivery: Modeling Data Transmission"
+subject: "Computer Science"
+grade: "7"
+durationMinutes: 20
+solCodes: ["7.NI.1"]
+objective: "The student will explain how packets make communication reliable and model how data is transmitted over networks and the Internet."
+materials:
+  - "The envelope materials from Lesson 24"
+  - "Paper for acknowledgment slips"
+  - "Large paper for a diagram"
+prerequisites:
+  - "Lesson 24: Protocols and Addresses"
+standardsLinks:
+  - label: "2024 Computer Science SOL: Grade 7 (PDF)"
+    url: "https://www.doe.virginia.gov/home/showpublisheddocument/57042/638603660749370000"
+  - label: "VDOE Computer Science Standards of Learning"
+    url: "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/standards-of-learning"
+tags:
+  - "networks-and-the-internet"
+  - "packets"
+  - "reliability"
+  - "models"
+  - "unplugged"
+updatedAt: 2026-11-13
+---
+**Standards covered (2024 Virginia Computer Science SOL)**
+
+- **7.NI.1** The student will describe and explain why protocols are essential in data transmission.
+  - d. Explain how packets ensure reliable communication among computing devices.
+  - e. Model how data is transmitted over networks and the Internet.
+
+## Prep
+
+- Plan faults to introduce: one envelope lost, one delayed, one with a damaged piece.
+
+## Warm-up (3 minutes)
+
+Ask, "What would happen to a video call if one tiny piece of data went missing? What about a bank transfer?"
+
+## Direct Instruction (4 minutes)
+
+- Explain how packets support reliability. Sequence numbers allow reordering and reveal gaps. Acknowledgments tell the sender what arrived. Missing packets are sent again. Error checks detect damaged packets. Packets can take different routes, so a failure on one path does not stop the message.
+- Explain the tradeoff: checking and resending take time, so some uses, such as live video, accept small losses for speed.
+- Describe what a good model shows: the devices, the routers, the paths, the packets with headers, and what happens when something fails.
+
+## Guided Practice (8 minutes)
+
+1. Run the envelope model with acknowledgment slips returned to the sender.
+2. Introduce the lost packet. The student notices the gap and requests it again.
+3. Introduce the damaged packet and the delayed packet.
+4. Discuss which faults the system recovered from and how.
+
+## Independent Practice / Quick Check (5 minutes)
+
+The student draws and labels a diagram modeling the transmission of a file across a network, including at least one failure and its recovery, and explains it aloud.
+
+Look for:
+- Reliability mechanisms are explained correctly.
+- The model shows devices, routers, paths, and packets.
+- A failure and its recovery are shown.
+
+## Differentiation
+
+**For students needing support**
+- Model one fault: a lost packet.
+- Provide a partly drawn diagram to complete.
+
+**For students ready for more**
+- Model two routes and a router failure that forces a new path.
+- Explain why a live video call handles loss differently from a file download.
+
+## Extensions
+
+- Create a short video or comic explaining the model.
+- Watch a network path with a route-tracing tool, with an adult.
+
+## Notes for Parent/Instructor
+
+- The standard's verb is "model." The diagram and the acted-out version both count.
+- Resilience through many possible routes is a design principle of the Internet.
